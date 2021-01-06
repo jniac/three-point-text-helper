@@ -1,0 +1,31 @@
+{
+  "name": "@jniac/three-point-text-helper",
+  "version": "1.0.0",
+  "description": "Can log \"hello world\" and \"goodbye world\" to the console!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "generate": "ts-node extras/atlas-generator",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jniac/three-point-text-helper.git"
+  },
+  "keywords": [
+    "threejs"
+  ],
+  "author": "Joseph Merdrignac",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jniac/three-point-text-helper/issues"
+  },
+  "homepage": "https://github.com/jniac/three-point-text-helper#readme",
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.1",
+    "canvas": "^2.6.1",
+    "fs-extra": "^9.0.1",
+    "three": "^0.124.0"
+  },
+  "dependencies": {}
+}

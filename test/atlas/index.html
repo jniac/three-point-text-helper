@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas base64 viewer</title>
+</head>
+<body>
+  <script type="module">
+    import str from '../../src/atlas.js'
+    const img = document.createElement('img')
+    img.src = str
+    document.body.append(img)
+  </script>
+</body>
+</html>
