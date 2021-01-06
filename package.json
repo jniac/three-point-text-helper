@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "generate": "ts-node extras/atlas-generator",
+    "generate-atlas": "ts-node extras/atlas-generator",
     "test": "test"
   },
   "repository": {
