@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "generate-atlas": "ts-node extras/atlas-generator",
+    "build": "tsc && ts-node extras/post-build.ts",
     "test": "test"
   },
   "repository": {
@@ -24,8 +25,9 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
     "canvas": "^2.6.1",
-    "fs-extra": "^9.0.1",
-    "three": "^0.124.0"
+    "fs-extra": "^9.0.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "three": "^0.124.0"
+  }
 }
