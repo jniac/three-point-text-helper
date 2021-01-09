@@ -12,20 +12,19 @@ tsc
 ```
 
 ## Run the tests/examples
-3 process required for the time being:
-- typescript
-```
-tsc --watch
+2 process required for the time being:
+- run the library itself + static server
+```shell
+npm run dev
+# (equivalent to)
+ts-node extras/dev.ts
 ```
 - webpack
 ```
 cd tests/examples
 webpack --watch
 ```
-- serving
-```
-npx serve
-```
+
 
 ## Documentation, references...
 

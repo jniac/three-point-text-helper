@@ -7,7 +7,7 @@ import { PointTextHelper } from '../../../../dist/index'
 new OrbitControls(stage.camera, stage.renderer.domElement)
 
 const mesh = new THREE.Mesh(
-  new THREE.IcosahedronGeometry(1, 4),
+  new THREE.IcosahedronGeometry(1, 0),
   new THREE.MeshBasicMaterial({ color:'cyan', wireframe:true }),
 )
 stage.scene.add(mesh)

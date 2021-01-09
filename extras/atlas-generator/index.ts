@@ -47,5 +47,15 @@ export const char_width = ${bundle.char_width};
 export const char_height = ${bundle.char_height};
 export const data = 'data:image/png;base64,${str}';
 `)
+  fs.outputFile('src/atlas.d.ts', `
+export declare const chars:string;
+export declare const width:number;
+export declare const height:number;
+export declare const grid_width:number;
+export declare const grid_height:number;
+export declare const char_width:number;
+export declare const char_height:number;
+export declare const data:string;
+  `)
   console.timeEnd('make src/atlas.js')
 })
