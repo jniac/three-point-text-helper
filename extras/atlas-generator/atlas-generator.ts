@@ -84,5 +84,13 @@ export default function texture_generator(args:Args) {
     y++
   }
 
-  return canvas
+  return {
+    width,
+    height,
+    char_width,
+    char_height,
+    grid_width,
+    grid_height,
+    canvas,
+  }
 }

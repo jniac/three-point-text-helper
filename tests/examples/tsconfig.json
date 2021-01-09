@@ -2,13 +2,11 @@
   "compilerOptions": {
     // "module": "",
     "target": "ES2020",
-    "declaration": true,
     "outDir": "./dist",
     "moduleResolution": "node",
-    "allowUmdGlobalAccess": true,
-    // "allowJs": true,
+    "allowUmdGlobalAccess": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ]
 }

@@ -15,7 +15,7 @@ const chars = [
 
 // canvas
 console.time('create canvas')
-const canvas = atlas_generator({ chars, debug:true })
+const bundle = atlas_generator({ chars, debug:true })
 console.timeEnd('create canvas')
 
 
@@ -23,7 +23,7 @@ console.timeEnd('create canvas')
 // png
 console.time('make src/atlas.png')
 const png = fs.createWriteStream('src/atlas.png')
-canvas.createPNGStream()
+bundle.canvas.createPNGStream()
 .pipe(png)
 .on('close', () => console.timeEnd('make src/atlas.png'))
 
@@ -37,6 +37,15 @@ fs.createReadStream('src/atlas.png')
 .on('end', () => {
   const result = Buffer.concat(chunks)
   const str = result.toString('base64')
-  fs.outputFile('src/atlas.js', `export default 'data:image/png;base64,${str}'`)
+  fs.outputFile('src/atlas.js', `
+export const chars = '${chars}';
+export const width = ${bundle.width};
+export const height = ${bundle.height};
+export const grid_width = ${bundle.grid_width};
+export const grid_height = ${bundle.grid_height};
+export const char_width = ${bundle.char_width};
+export const char_height = ${bundle.char_height};
+export const data = 'data:image/png;base64,${str}';
+`)
   console.timeEnd('make src/atlas.js')
 })
