@@ -1,9 +1,6 @@
-import * as atlas from '../atlas.js'
 import * as THREE from 'three'
-import vertexShader from './point.vert'
-import fragmentShader from './point.frag'
 import get_material from './get_material.js'
-import { get_char_offset, get_count_and_offsets } from '../atlas-utils.js'
+import { get_count_and_offsets } from '../atlas-utils.js'
 
 const CHAR_MAX_LIMIT = 12
 
@@ -141,6 +138,12 @@ class PointTextHelper extends THREE.Points {
       this.push(`char_offset_${i}`, char_offset_array[i])
     }
   }
+
+  get z_offset() { return this.material['uniforms'].z_offset.value as number }
+  set z_offset(value:number) { this.material['uniforms'].z_offset.value = value }
+
+  get opacity() { return this.material['uniforms'].opacity.value as number }
+  set opacity(value:number) { this.material['uniforms'].opacity.value = value }
 }
 
 export {

@@ -19,6 +19,15 @@
 </p>
 </a>
 
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices-knot/">
+<p align="center">
+  <img width="600px" src="screenshots/vertices-knot.jpg">
+<p>
+<p align="center">
+  z_offset (for better readability)
+</p>
+</a>
+
 
 ## scripts
 ```shell
@@ -30,7 +39,7 @@ compile:
 tsc
 ```
 
-## Run the tests/examples
+## dev mode, Run the tests/examples
 2 process required for the time being:
 - run the library itself + static server
 ```shell
@@ -38,11 +47,10 @@ npm run dev
 # (equivalent to)
 ts-node extras/dev.ts
 ```
-- webpack
-```
-cd tests/examples
-webpack --watch
-```
+http://localhost:8000
+
+- [examples](tests/examples)
+
 
 
 ## Documentation, references...
