@@ -2,7 +2,7 @@ import * as atlas from '../atlas.js'
 import * as THREE from 'three'
 import vertexShader from './point.vert'
 import fragmentShader from './point.frag'
-import get_material from './get-material.js'
+import get_material from './get_material.js'
 import { get_char_offset, get_count_and_offsets } from '../atlas-utils.js'
 
 const CHAR_MAX_LIMIT = 12
@@ -12,11 +12,6 @@ const defaultDisplayParams = {
   color: 'white', 
   size: 1,
   text: 'foo',
-}
-
-const defaultDisplayVerticesParams = {
-  color: 'white',
-  size: 1,
 }
 
 class PointTextHelper extends THREE.Points {
