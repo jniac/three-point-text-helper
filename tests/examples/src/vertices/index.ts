@@ -13,8 +13,16 @@ const mesh = new THREE.Mesh(
 stage.scene.add(mesh)
 // mesh['update'] = () => mesh.rotation.x += .01
 
-const ph = new PointTextHelper()
-ph.displayVertices(mesh.geometry.vertices)
+const ph = new PointTextHelper(20)
+// ph.displayVertices(mesh.geometry.vertices)
+ph.display({
+  text: 'foo'
+})
+ph.display({
+  text: 'hello ABC 0123',
+  position: new THREE.Vector3(0, 1, 0),
+  color: 'yellow',
+})
 stage.scene.add(ph)
 
 Object.assign(window, {ph})

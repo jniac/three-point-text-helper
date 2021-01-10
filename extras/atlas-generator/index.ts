@@ -11,11 +11,11 @@ const chars = [
   '×',
 ].join('')
 
-
+const debug = false
 
 // canvas
 console.time('create canvas')
-const bundle = atlas_generator({ chars, debug:true })
+const bundle = atlas_generator({ chars, debug })
 console.timeEnd('create canvas')
 
 

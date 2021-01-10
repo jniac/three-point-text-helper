@@ -46,6 +46,8 @@ const compile_ts = () => new Promise<void>(resolve => {
   const t = Date.now()
   exec('tsc', (err, stdout, stderr) => {
     if (err) {
+      console.log(stderr)
+      console.log(stdout)
       console.log(err)
     } else {
       console.log(chalk`{cyan compiled ts {dim ${Date.now() - t}ms}}`)
