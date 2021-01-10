@@ -8,6 +8,7 @@
     body {
       margin: 0;
       padding: 16px;
+      background-color: #666;
     }
     img {
       width: 100%;
@@ -16,7 +17,7 @@
 </head>
 <body>
   <script type="module">
-    import { data } from '../../src/atlas.js'
+    import data from '../../src/atlas-data.js'
     const img = document.createElement('img')
     img.src = data
     document.body.append(img)

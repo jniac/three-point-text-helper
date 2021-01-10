@@ -30,21 +30,21 @@ async function* walk(dir:string) {
 }
 
 const copy_atlas = async () => {
-  await fs.copyFile(`${config.entry}/atlas.js`, `${config.outdir}/atlas.js`)
-  await fs.copyFile(`${config.entry}/atlas.d.ts`, `${config.outdir}/atlas.d.ts`)
+  await fs.copyFile(`${config.entry}/atlas-data.js`, `${config.outdir}/atlas-data.js`)
 }
 
-const export_glsl = async (path:string) => {
-  const data = await fs.readFile(path, { encoding:'utf-8' })
-  const output = Path.resolve(config.outdir, Path.relative(config.entry, path))
-  await fs.outputFile(`${output}.js`, `export default /* glsl */\`\n${data}\n\``)
-  await fs.outputFile(`${output}.d.ts`, `declare const _default: string;\nexport default _default;\n`)
-  console.log(chalk`{cyan export glsl from ${path}}`)
-}
+// useless since using rollup + typescript
+// const export_glsl = async (path:string) => {
+//   const data = await fs.readFile(path, { encoding:'utf-8' })
+//   const output = Path.resolve(config.outdir, Path.relative(config.entry, path))
+//   await fs.outputFile(`${output}.js`, `export default /* glsl */\`\n${data}\n\``)
+//   await fs.outputFile(`${output}.d.ts`, `declare const _default: string;\nexport default _default;\n`)
+//   console.log(chalk`{cyan export glsl from ${path}}`)
+// }
 
 const compile_ts = () => new Promise<void>(resolve => {
   const t = Date.now()
-  exec('tsc', (err, stdout, stderr) => {
+  exec('rollup -c', (err, stdout, stderr) => {
     if (err) {
       console.log(stderr)
       console.log(stdout)
@@ -61,14 +61,7 @@ chokidar.watch(`${config.entry}/**/*`)
  
   console.log(`${path} has changed`)
 
-  if (is.glsl(path)) {
-    export_glsl(path)
-  }
-
-  else if (is.ts(path)) {
-    compile_ts()
-  }
-
+  compile_ts()
   copy_atlas()
 })
 
@@ -84,12 +77,6 @@ const build = async () => {
   await fs.remove(config.outdir)
   await fs.ensureDir(config.outdir)
 
-  for await (const file of walk(config.entry)) {
-    if (is.glsl(file)) {
-      export_glsl(file)
-    }
-  }
-  
   await copy_atlas()
   await compile_ts()
 
