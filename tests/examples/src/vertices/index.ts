@@ -7,7 +7,7 @@ import { PointTextHelper } from '../../../../dist/index'
 new OrbitControls(stage.camera, stage.renderer.domElement)
 
 stage.scene.add(new THREE.Mesh(
-  new THREE.SphereBufferGeometry(10, 120, 60),
+  new THREE.SphereBufferGeometry(10, 60, 30),
   new THREE.MeshBasicMaterial({ color:'#333', wireframe:true }),
 ))
 
