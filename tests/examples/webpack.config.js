@@ -2,10 +2,11 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    'vertices': './src/vertices/index.ts',
-    'vertices-stress': './src/vertices-stress/index.ts',
+    'vertices': './src/vertices.ts',
+    'vertices-stress': './src/vertices-stress.ts',
+    'vertices-knot': './src/vertices-knot.ts',
   },
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -16,6 +17,7 @@ module.exports = {
     ],
   },
   performance: {
+    hints: false,
     maxEntrypointSize: 1000000,
   },
   resolve: {
@@ -31,5 +33,4 @@ module.exports = {
 		publicPath: "/",
     disableHostCheck: true,
   },
-  watch: true,
 };

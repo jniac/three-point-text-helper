@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import * as stage from '../three-stage'
+import * as stage from './three-stage'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { PointTextHelper } from '../../../../dist/index'
+import { PointTextHelper } from '../../../dist/index'
 
 
 new OrbitControls(stage.camera, stage.renderer.domElement)
