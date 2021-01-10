@@ -6,6 +6,7 @@ uniform vec2 char_size;
 uniform float char_aspect;
 
 varying float v_char_count;
+varying vec3 v_color;
 
 // REPLACE-DECLARE:
 varying vec2 v_char_offset_X;
@@ -23,7 +24,7 @@ vec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {
 }
 
 vec4 get_texel(in vec2 position, in vec2 offset, float index) {
-  return texture2D(atlas_texture, get_uv_coords(position, offset, index));
+  return texture2D(atlas_texture, get_uv_coords(position, offset, index)) * vec4(v_color, 1.0);
 }
 
 void main() {

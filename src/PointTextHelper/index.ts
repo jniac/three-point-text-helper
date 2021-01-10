@@ -5,7 +5,7 @@ import fragmentShader from './point.frag'
 import get_material from './get-material.js'
 import { get_char_offset, get_count_and_offsets } from '../atlas-utils.js'
 
-const CHAR_MAX_LIMIT = 14
+const CHAR_MAX_LIMIT = 12
 
 const defaultDisplay = {
   position: { x:0, y:0, z:0 }, 
