@@ -1,6 +1,21 @@
 # Point Text Helper
 "Point Text" Helper for ThreeJS
 
+<p align="center">
+  <img width="600px" src="screenshots/vertices.jpg">
+<p>
+<p align="center">
+  some texts
+</p>
+
+<p align="center">
+  <img width="600px" src="screenshots/vertices-stress.jpg">
+<p>
+<p align="center">
+  a lot of texts (37212)
+</p>
+
+
 ## scripts
 ```shell
 npm run generate-atlas
