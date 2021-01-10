@@ -1,0 +1,36 @@
+#UI {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 32px;
+}
+#UI,
+#UI > div {
+  display: flex;
+}
+#UI:not(.row),
+#UI > div:not(.row) {
+  flex-direction: column;
+}
+#UI:not(.row) > * + *,
+#UI > div:not(.row) > * + * {
+  margin-top: 2px;
+}
+#UI.hidden {
+  visibility: hidden;
+}
+
+button {
+  border: none;
+  padding: 4px 12px;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+button:not(.selected):hover {
+  background-color: rgb(235, 220, 184);
+}
+button.selected {
+  background-color: goldenrod;
+}

@@ -38,6 +38,7 @@ loop()
 window.addEventListener('pointermove', autoPauseReset, { capture:true })
 window.addEventListener('wheel', autoPauseReset, { capture:true })
 window.addEventListener('keydown', autoPauseReset, { capture:true })
+window.addEventListener('auto_pause_reset', autoPauseReset, { capture:true })
 
 export {
   renderer,

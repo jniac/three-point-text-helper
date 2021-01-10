@@ -44,7 +44,7 @@ new OrbitControls(stage.camera, stage.renderer.domElement)
 const mesh = new THREE.Mesh(
   new THREE.TorusKnotGeometry(1, .4, 128 * 1.5, 8),
   new THREE.MeshPhysicalMaterial({ 
-    color:'#09f', 
+    color:'#0c9', 
     // wireframe:true,
     polygonOffset: true,
     polygonOffsetFactor: 1,
@@ -76,4 +76,9 @@ mesh.add(new THREE.Mesh(
     format: i => `#${i}`,
   })
   Object.assign(window, { ph })
+
+  window.addEventListener('z_offset_0', () => ph.z_offset = 0)
+  window.addEventListener('z_offset_default', () => ph.z_offset = -.01)
+  window.addEventListener('z_offset_big', () => ph.z_offset = -.05)
+  window.addEventListener('z_offset_max', () => ph.z_offset = -1)
 }

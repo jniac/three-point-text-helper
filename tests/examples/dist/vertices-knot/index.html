@@ -4,9 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vertices</title>
-  <link rel="stylesheet" href="../reset.css">
+  <link rel="stylesheet" href="../style/main.css">
 </head>
 <body>
   <script src="bundle.js"></script>
+  <script src="../script/main.js" type="module"></script>
+  <div id="UI">
+    <div class="buttons toggle">
+      <button data-button-type="z_offset_0">z_offset = 0</button>
+      <button data-button-type="z_offset_default" class="selected">z_offset = -0.01 (default)</button>
+      <button data-button-type="z_offset_big">z_offset = -0.05</button>
+      <button data-button-type="z_offset_max">z_offset = -1</button>
+    </div>
+  </div>
 </body>
 </html>
