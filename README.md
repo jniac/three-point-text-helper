@@ -1,19 +1,23 @@
 # Point Text Helper
 "Point Text" Helper for ThreeJS
 
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices/">
 <p align="center">
   <img width="600px" src="screenshots/vertices.jpg">
 <p>
 <p align="center">
   some texts
 </p>
+</a>
 
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices-stress/">
 <p align="center">
   <img width="600px" src="screenshots/vertices-stress.jpg">
 <p>
 <p align="center">
   a lot of texts (37212)
 </p>
+</a>
 
 
 ## scripts
