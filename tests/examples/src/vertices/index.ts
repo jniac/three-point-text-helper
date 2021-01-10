@@ -6,6 +6,11 @@ import { PointTextHelper } from '../../../../dist/index'
 
 new OrbitControls(stage.camera, stage.renderer.domElement)
 
+stage.scene.add(new THREE.Mesh(
+  new THREE.SphereBufferGeometry(10, 120, 60),
+  new THREE.MeshBasicMaterial({ color:'#333', wireframe:true }),
+))
+
 const mesh = new THREE.Mesh(
   new THREE.IcosahedronGeometry(1, 0),
   new THREE.MeshBasicMaterial({ color:'cyan', wireframe:true }),
@@ -15,28 +20,35 @@ stage.scene.add(mesh)
 
 {
   const ph = new PointTextHelper(20)
-  stage.scene.add(ph)
+  mesh.add(ph)
   
   ph.display({
-    text: 'foo'
+    text: 'foo',
+    size: 2,
   })
   
   ph.display({
-    text: 'hello ABC 0123',
-    position: new THREE.Vector3(0, 1.3, 0),
+    text: 'Top! ABC 0123',
+    position: new THREE.Vector3(0, 1.1, 0),
     color: '#06f',
   })
   
   ph.display({
     text: 'Bottom',
-    position: new THREE.Vector3(0, -1.3, 0),
+    position: new THREE.Vector3(0, -1.1, 0),
+    color: '#06f',
+  })
+  
+  ph.display({
+    text: 'Right',
+    position: new THREE.Vector3(1.1, 0, 0),
     color: '#f1db73',
     size: .5,
   })
   
   ph.display({
-    text: 'Right',
-    position: new THREE.Vector3(1.3, 0, 0),
+    text: 'Left',
+    position: new THREE.Vector3(-1.1, 0, 0),
     color: '#f1db73',
     size: .5,
   })
@@ -46,10 +58,10 @@ stage.scene.add(mesh)
 
 {
   const ph = new PointTextHelper(6)
-  stage.scene.add(ph)
+  mesh.add(ph)
   console.log(mesh.geometry.vertices.length)
   ph.displayVertices(mesh.geometry.vertices, {
-    size: .3,
+    size: .5,
     color: 'cyan',
     format: i => `#${i}`,
   })
