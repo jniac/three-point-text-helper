@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    vertices: './src/vertices/index.ts'
+    'vertices': './src/vertices/index.ts',
+    'vertices-stress': './src/vertices-stress/index.ts',
   },
   mode: 'development',
   module: {
