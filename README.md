@@ -6,7 +6,7 @@
   <img width="600px" src="screenshots/vertices.jpg">
 <p>
 <p align="center">
-  some texts
+  some texts (position, color, size)
 </p>
 </a>
 

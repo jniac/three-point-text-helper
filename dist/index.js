@@ -181,7 +181,7 @@ class PointTextHelper extends Points {
         geometry.setAttribute(name, new BufferAttribute(array, buffer.itemSize));
     }
     display(params = defaultDisplayParams) {
-        params = { ...defaultDisplayParams, ...params };
+        params = Object.assign(Object.assign({}, defaultDisplayParams), params);
         const { x, y, z } = params.position;
         this.push('position', [x, y, z]);
         const { r, g, b } = new Color(params.color);
@@ -195,6 +195,7 @@ class PointTextHelper extends Points {
         }
     }
     displayVertices(vertices, { color = 'white', size = 1, format = undefined, } = {}) {
+        var _a;
         const isFloat32 = vertices instanceof Float32Array;
         const { r, g, b } = new Color(color);
         const length = isFloat32 ? vertices.length / 3 : vertices.length;
@@ -218,7 +219,7 @@ class PointTextHelper extends Points {
             color_array[index * 3 + 1] = g;
             color_array[index * 3 + 2] = b;
             size_array[index] = size;
-            const text = format?.(index) ?? index.toString(10);
+            const text = (_a = format === null || format === void 0 ? void 0 : format(index)) !== null && _a !== void 0 ? _a : index.toString(10);
             const { count, offsets } = get_count_and_offsets(text, charMax);
             char_count_array[index] = count;
             for (let i = 0; i < charMax; i++) {
