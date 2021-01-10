@@ -43,5 +43,3 @@ export const get_count_and_offsets = (s:string|number, max:number = 4) => {
 
   return { count, offsets }
 }
-
-Object.assign(window, { get_char_index, get_char_offset, get_count_and_offsets })

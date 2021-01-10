@@ -82,7 +82,7 @@ class PointTextHelper extends THREE.Points {
     }
   }
 
-  displayVertices(vertices:THREE.Vector3[], {
+  displayVertices(vertices:THREE.Vector3[]|Float32Array, {
     color = 'white',
     size = 1,
     format = undefined,
@@ -91,13 +91,15 @@ class PointTextHelper extends THREE.Points {
     color?: string | THREE.Color,
     format?: (index:number) => string,
   } = {}) {
+
+    const isFloat32 = vertices instanceof Float32Array
     
     const { r, g, b } = new THREE.Color(color)
 
-    const length = vertices.length
+    const length = isFloat32 ? vertices.length / 3 : vertices.length
     const { charMax } = this
     
-    const position_array = new Float32Array(length * 3)
+    const position_array = isFloat32 ? (vertices as Float32Array) : new Float32Array(length * 3)
     const color_array = new Float32Array(length * 3)
     const size_array = new Float32Array(length)
     const char_count_array = new Float32Array(length)
@@ -108,10 +110,12 @@ class PointTextHelper extends THREE.Points {
 
     for (let index = 0; index < length; index++) {
 
-      const { x, y, z } =  vertices[index]
-      position_array[index * 3 + 0] = x
-      position_array[index * 3 + 1] = y
-      position_array[index * 3 + 2] = z
+      if (isFloat32 === false) {
+        const { x, y, z } =  vertices[index] as THREE.Vector3
+        position_array[index * 3 + 0] = x
+        position_array[index * 3 + 1] = y
+        position_array[index * 3 + 2] = z
+      }
 
       color_array[index * 3 + 0] = r
       color_array[index * 3 + 1] = g

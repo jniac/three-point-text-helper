@@ -35,24 +35,33 @@ const chunks = []
 fs.createReadStream('src/atlas.png')
 .on('data', data => chunks.push(data))
 .on('end', () => {
+
   const result = Buffer.concat(chunks)
   const str = result.toString('base64')
+
   fs.outputFile('src/atlas-data.js', `
 export default 'data:image/png;base64,${str}'
-  `)
+`.slice(1))
+
   fs.outputFile('src/atlas-data.d.ts', `
 declare const _default: string;
 export default _default;
-    `)
+`.slice(1))
+
   fs.outputFile('src/atlas.ts', `
-export const chars = '${chars}';
-export const width = ${bundle.width};
-export const height = ${bundle.height};
-export const grid_width = ${bundle.grid_width};
-export const grid_height = ${bundle.grid_height};
-export const char_width = ${bundle.char_width};
-export const char_height = ${bundle.char_height};
-export { default as data } from './atlas-data.js';
-`)
+import atlas_data from './atlas-data'
+import * as utils from './atlas-utils'
+
+export const chars = '${chars.replace(/(\\)/, '\\$1')}'
+export const width = ${bundle.width}
+export const height = ${bundle.height}
+export const grid_width = ${bundle.grid_width}
+export const grid_height = ${bundle.grid_height}
+export const char_width = ${bundle.char_width}
+export const char_height = ${bundle.char_height}
+export const data = atlas_data
+export { utils } 
+`.slice(1))
+
   console.timeEnd('make src/atlas.js')
 })

@@ -4,6 +4,7 @@ uniform sampler2D atlas_texture;
 uniform float char_max;
 uniform vec2 char_size;
 uniform float char_aspect;
+uniform float opacity;
 
 varying float v_char_count;
 varying vec3 v_color;
@@ -14,17 +15,18 @@ varying vec2 v_char_offset_X;
 
 vec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {
   float x = 
-    position.x * char_size.x * char_max 
-    + offset.x * char_size.x 
-    - char_size.x * index;
+    (position.x * char_max 
+    + offset.x 
+    - index) * char_size.x;
   float y = 1.0 - (
-    position.y * char_size.y 
-    + offset.y * char_size.y);
+    position.y 
+    + offset.y
+    ) * char_size.y;
   return vec2(x, y);
 }
 
 vec4 get_texel(in vec2 position, in vec2 offset, float index) {
-  return texture2D(atlas_texture, get_uv_coords(position, offset, index)) * vec4(v_color, 1.0);
+  return texture2D(atlas_texture, get_uv_coords(position, offset, index)) * vec4(v_color, opacity);
 }
 
 void main() {

@@ -2,7 +2,7 @@ precision highp float;
 
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
-uniform float time;
+uniform float z_offset;
 
 attribute vec3 position;
 
@@ -31,5 +31,6 @@ void main() {
   
   vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
   gl_Position = projectionMatrix * mvPosition;
+  gl_Position.z += z_offset;
 	gl_PointSize = size * 2000.0 / -mvPosition.z;
 }

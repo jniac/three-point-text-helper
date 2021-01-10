@@ -14,6 +14,8 @@ export default function get_material(char_max:number) {
 
   const uniforms = {
     atlas_texture: { value:texture },
+    opacity:{ value:1 },
+    z_offset:{ value:-0.01 },
     char_max: { value:char_max },
     char_size: { value:new THREE.Vector2(char_width / width, char_height / height) },
     char_aspect: { value:char_width / char_height },
@@ -26,10 +28,16 @@ export default function get_material(char_max:number) {
     fragmentShader,
   
     blending: THREE.AdditiveBlending,
-    depthTest: false,
+    // depthTest: false,
     transparent: true,
     vertexColors: true,
     flatShading: true,
+    depthWrite: false,
+  })
+
+  Object.defineProperty(material, 'opacity', {
+    get: () => material.uniforms['opacity'].value,
+    set: (value:number) => material.uniforms['opacity'].value = value,
   })
   
   return material
