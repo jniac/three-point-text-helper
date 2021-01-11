@@ -50,7 +50,7 @@ pth.display({ text:'hello!',  color:'cyan' })
 pth.display({ text:'top',     color:'cyan', size:.5, position:new THREE.Vector3(0, 1, 0) })
 pth.display({ text:'bottom',  color:'cyan', size:.5, position:{ x:0, y:-1, z:0 } })
 
-// // display vertice from an of vertices...
+// // display vertices from an array of vertices...
 pth.displayVertices(mesh.geometry.vertices)
 
 // or from a buffer (be aware that in buffer geometries vertices are most often duplicated)
@@ -62,7 +62,7 @@ pth.displayVertices(geometry.getAttribute('position').array, {
 ```
 
 ## "dev" mode, Run the tests/examples
-2 process required for the time being:
+from the cloned project, 2 process:
 - run the library itself + static server
 ```shell
 npm run dev
@@ -74,12 +74,4 @@ http://localhost:8000
 - [examples](tests/examples)
 
 
-
-## Documentation, references...
-
-how to use three in typescript?  
-https://gist.github.com/mattdesl/06d056f10322532e6e07bc97ef91b557
-
-test npm package without publishing  
-https://medium.com/@vcarl/problems-with-npm-link-and-an-alternative-4dbdd3e66811
 
