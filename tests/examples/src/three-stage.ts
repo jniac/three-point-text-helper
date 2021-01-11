@@ -40,6 +40,13 @@ window.addEventListener('wheel', autoPauseReset, { capture:true })
 window.addEventListener('keydown', autoPauseReset, { capture:true })
 window.addEventListener('auto_pause_reset', autoPauseReset, { capture:true })
 
+window.addEventListener('resize', () => {
+  const { innerWidth:w, innerHeight:h } = window
+  renderer.setSize(w, h, true)
+  camera.aspect = w / h
+  camera.updateProjectionMatrix()
+})
+
 Object.assign(window, { THREE })
 
 export {
