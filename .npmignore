@@ -1,5 +1,6 @@
-rrtsconfig.json
+tsconfig.json
 rollup.config.js
 src
 tests
 tmp
+extras

@@ -13,7 +13,7 @@ const mesh = new THREE.Mesh(
 stage.scene.add(mesh)
 // mesh['update'] = () => mesh.rotation.x += .01
 
-const ph = new PointTextHelper(6)
+const ph = new PointTextHelper({ charMax:6 })
 mesh.add(ph)
 
 console.log(mesh.geometry.vertices.length)

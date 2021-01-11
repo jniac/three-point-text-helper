@@ -19,7 +19,7 @@ stage.scene.add(mesh)
 // mesh['update'] = () => mesh.rotation.x += .01
 
 {
-  const ph = new PointTextHelper(20)
+  const ph = new PointTextHelper({ charMax:20 })
   mesh.add(ph)
   
   ph.display({
@@ -57,7 +57,7 @@ stage.scene.add(mesh)
 }
 
 {
-  const ph = new PointTextHelper(6)
+  const ph = new PointTextHelper({ charMax:6 })
   mesh.add(ph)
   console.log(mesh.geometry.vertices.length)
   ph.displayVertices(mesh.geometry.vertices, {

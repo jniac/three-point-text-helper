@@ -40,6 +40,8 @@ window.addEventListener('wheel', autoPauseReset, { capture:true })
 window.addEventListener('keydown', autoPauseReset, { capture:true })
 window.addEventListener('auto_pause_reset', autoPauseReset, { capture:true })
 
+Object.assign(window, { THREE })
+
 export {
   renderer,
   scene,

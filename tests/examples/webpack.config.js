@@ -5,6 +5,7 @@ module.exports = {
     'vertices': './src/vertices.ts',
     'vertices-stress': './src/vertices-stress.ts',
     'vertices-knot': './src/vertices-knot.ts',
+    'vertices-hello': './src/vertices-hello.ts',
   },
   mode: 'production',
   module: {

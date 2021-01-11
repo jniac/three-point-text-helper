@@ -17,7 +17,7 @@ new OrbitControls(stage.camera, stage.renderer.domElement)
     }),
   )
   stage.scene.add(background)
-  const ph = new PointTextHelper(6)
+  const ph = new PointTextHelper({ charMax:6 })
   background.add(ph)
   ph.displayVertices(background.geometry.attributes['position'].array as Float32Array, {
     size: .4,
@@ -67,7 +67,7 @@ mesh.add(new THREE.Mesh(
 ))
 
 {
-  const ph = new PointTextHelper(6)
+  const ph = new PointTextHelper({ charMax:6 })
   mesh.add(ph)
   console.log(mesh.geometry.vertices.length)
   ph.displayVertices(mesh.geometry.vertices, {
