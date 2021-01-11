@@ -50,10 +50,11 @@ pth.display({ text:'hello!',  color:'cyan' })
 pth.display({ text:'top',     color:'cyan', size:.5, position:new THREE.Vector3(0, 1, 0) })
 pth.display({ text:'bottom',  color:'cyan', size:.5, position:{ x:0, y:-1, z:0 } })
 
-// // display vertices from an array of vertices...
+// display vertices from an array of vertices...
 pth.displayVertices(mesh.geometry.vertices)
 
-// or from a buffer (be aware that in buffer geometries vertices are most often duplicated)
+// ...or from a buffer 
+// (be aware that in buffer geometries, vertices are most often duplicated)
 const geometry = new THREE.SphereBufferGeometry(1.4, 12, 24)
 pth.displayVertices(geometry.getAttribute('position').array, {
   color: '#fc9',
@@ -62,7 +63,7 @@ pth.displayVertices(geometry.getAttribute('position').array, {
 ```
 
 ## "dev" mode, Run the tests/examples
-from the cloned project, 2 process:
+from a local repository, 2 process:
 - run the library itself + static server
 ```shell
 npm run dev
