@@ -30,17 +30,14 @@
 
 
 ## usage
+```
+npm i @jniac/three-point-text-helper
+```
 ```javascript
 import * as THREE from 'three'
 import { PointTextHelper } from '@jniac/three-point-text-helper'
 
 //- snip -//
-
-const mesh = new THREE.Mesh(
-  new THREE.IcosahedronGeometry(1, 0),
-  new THREE.MeshBasicMaterial({ color:'cyan', wireframe:true }),
-)
-scene.add(mesh)
 
 const pth = new PointTextHelper({ charMax:10 })
 mesh.add(pth)
@@ -50,15 +47,23 @@ pth.display({ text:'hello!',  color:'cyan' })
 pth.display({ text:'top',     color:'cyan', size:.5, position:new THREE.Vector3(0, 1, 0) })
 pth.display({ text:'bottom',  color:'cyan', size:.5, position:{ x:0, y:-1, z:0 } })
 
-// display vertices from an array of vertices...
+// or, from a mesh...
+const mesh = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(1, 0),
+  new THREE.MeshBasicMaterial({ color:'cyan', wireframe:true }),
+)
+scene.add(mesh)
+
+// ...display an array of vertices:
 pth.displayVertices(mesh.geometry.vertices)
 
-// ...or from a buffer 
+// ...or a "position" buffer:
 // (be aware that in buffer geometries, vertices are most often duplicated)
 const geometry = new THREE.SphereBufferGeometry(1.4, 12, 24)
 pth.displayVertices(geometry.getAttribute('position').array, {
   color: '#fc9',
   size: .3,
+  format: index => `#${index}`,
 })
 ```
 
