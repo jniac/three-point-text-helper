@@ -22,6 +22,11 @@ declare class PointTextHelper extends THREE.Points {
         color?: string | THREE.Color;
         format?: (index: number) => string;
     }): void;
+    displayFaces(geometry: THREE.Geometry | THREE.BufferGeometry, { color, size, format, }?: {
+        size?: number;
+        color?: string | THREE.Color;
+        format?: (index: number) => string;
+    }): void;
     get z_offset(): number;
     set z_offset(value: number);
     get opacity(): number;

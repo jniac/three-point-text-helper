@@ -200,7 +200,6 @@ class PointTextHelper extends Points {
         const { r, g, b } = new Color(color);
         const length = isFloat32 ? vertices.length / 3 : vertices.length;
         const { charMax } = this;
-        console.log({ isFloat32, length });
         const position_array = isFloat32 ? vertices : new Float32Array(length * 3);
         const color_array = new Float32Array(length * 3);
         const size_array = new Float32Array(length);
@@ -235,6 +234,49 @@ class PointTextHelper extends Points {
         this.push('char_count', char_count_array);
         for (let i = 0; i < charMax; i++) {
             this.push(`char_offset_${i}`, char_offset_array[i]);
+        }
+    }
+    displayFaces(geometry, { color = 'white', size = 1, format = undefined, } = {}) {
+        if (geometry['isGeometry']) {
+            geometry = geometry;
+            const { faces, vertices } = geometry;
+            const length = faces.length;
+            const array = new Float32Array(length * 3);
+            for (let index = 0; index < length; index++) {
+                const { a, b, c } = faces[index];
+                const { x: ax, y: ay, z: az } = vertices[a];
+                const { x: bx, y: by, z: bz } = vertices[b];
+                const { x: cx, y: cy, z: cz } = vertices[c];
+                array[index * 3 + 0] = (ax + bx + cx) / 3;
+                array[index * 3 + 1] = (ay + by + cy) / 3;
+                array[index * 3 + 2] = (az + bz + cz) / 3;
+            }
+            this.displayVertices(array, { color, size, format });
+        }
+        if (geometry['isBufferGeometry']) {
+            geometry = geometry;
+            const indexes = geometry.index.array;
+            const position = geometry.getAttribute('position').array;
+            const length = indexes.length / 3;
+            const array = new Float32Array(length * 3);
+            for (let index = 0; index < length; index++) {
+                const ai = indexes[index * 3 + 0];
+                const ax = position[ai * 3 + 0];
+                const ay = position[ai * 3 + 1];
+                const az = position[ai * 3 + 2];
+                const bi = indexes[index * 3 + 1];
+                const bx = position[bi * 3 + 0];
+                const by = position[bi * 3 + 1];
+                const bz = position[bi * 3 + 2];
+                const ci = indexes[index * 3 + 2];
+                const cx = position[ci * 3 + 0];
+                const cy = position[ci * 3 + 1];
+                const cz = position[ci * 3 + 2];
+                array[index * 3 + 0] = (ax + bx + cx) / 3;
+                array[index * 3 + 1] = (ay + by + cy) / 3;
+                array[index * 3 + 2] = (az + bz + cz) / 3;
+            }
+            this.displayVertices(array, { color, size, format });
         }
     }
     get z_offset() { return this.material['uniforms'].z_offset.value; }
