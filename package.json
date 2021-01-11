@@ -1,6 +1,6 @@
 {
   "name": "@jniac/three-point-text-helper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Displaying point text in THREE JS.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
