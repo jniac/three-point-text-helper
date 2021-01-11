@@ -11,11 +11,13 @@ declare const defaultDisplayParams: {
 };
 declare class PointTextHelper extends THREE.Points {
     private charMax;
-    constructor(charMax?: number);
+    constructor({ charMax, }?: {
+        charMax?: number;
+    });
     private push;
     private pushFill;
     display(params?: Partial<typeof defaultDisplayParams>): void;
-    displayVertices(vertices: THREE.Vector3[] | Float32Array, { color, size, format, }?: {
+    displayVertices(vertices: THREE.Vector3[] | ArrayLike<number>, { color, size, format, }?: {
         size?: number;
         color?: string | THREE.Color;
         format?: (index: number) => string;

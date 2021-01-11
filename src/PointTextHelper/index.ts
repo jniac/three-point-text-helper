@@ -15,7 +15,11 @@ class PointTextHelper extends THREE.Points {
 
   private charMax:number
 
-  constructor(charMax:number = 4) {
+  constructor({ 
+    charMax = 4,
+  }:{
+    charMax?:number,
+  } = {}) {
 
     if (charMax > CHAR_MAX_LIMIT) {
       console.warn(`max chars is ${CHAR_MAX_LIMIT}`)
@@ -79,7 +83,7 @@ class PointTextHelper extends THREE.Points {
     }
   }
 
-  displayVertices(vertices:THREE.Vector3[]|Float32Array, {
+  displayVertices(vertices:THREE.Vector3[]|ArrayLike<number>, {
     color = 'white',
     size = 1,
     format = undefined,
@@ -95,6 +99,7 @@ class PointTextHelper extends THREE.Points {
 
     const length = isFloat32 ? vertices.length / 3 : vertices.length
     const { charMax } = this
+    console.log({ isFloat32, length })
     
     const position_array = isFloat32 ? (vertices as Float32Array) : new Float32Array(length * 3)
     const color_array = new Float32Array(length * 3)

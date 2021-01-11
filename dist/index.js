@@ -146,7 +146,7 @@ const defaultDisplayParams = {
     text: 'foo',
 };
 class PointTextHelper extends Points {
-    constructor(charMax = 4) {
+    constructor({ charMax = 4, } = {}) {
         if (charMax > CHAR_MAX_LIMIT) {
             console.warn(`max chars is ${CHAR_MAX_LIMIT}`);
             charMax = CHAR_MAX_LIMIT;
@@ -200,6 +200,7 @@ class PointTextHelper extends Points {
         const { r, g, b } = new Color(color);
         const length = isFloat32 ? vertices.length / 3 : vertices.length;
         const { charMax } = this;
+        console.log({ isFloat32, length });
         const position_array = isFloat32 ? vertices : new Float32Array(length * 3);
         const color_array = new Float32Array(length * 3);
         const size_array = new Float32Array(length);
