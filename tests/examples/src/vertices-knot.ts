@@ -24,6 +24,11 @@ new OrbitControls(stage.camera, stage.renderer.domElement)
     color: '#fff',
     format: i => `{${i}}`,
   })
+  ph.displayFaces(background.geometry, {
+    size: .2,
+    color: '#fff',
+    format: i => `-${i}-`,
+  })
   ph.material['opacity'] = .5
   Object.assign(window, { background })
 }
@@ -73,7 +78,13 @@ mesh.add(new THREE.Mesh(
   ph.displayVertices(mesh.geometry.vertices, {
     size: .2,
     color: '#fff',
-    format: i => `#${i}`,
+    format: i => `v${i}`,
+  })
+
+  ph.displayFaces(mesh.geometry, {
+    size: .1,
+    color: 'cyan',
+    format: i => `f${i}`,
   })
   Object.assign(window, { ph })
 
