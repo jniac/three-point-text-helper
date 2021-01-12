@@ -1,5 +1,5 @@
 import atlas_data from './PointTextHelper/atlas-data.js';
-import { Texture, Vector2, RawShaderMaterial, AdditiveBlending, Points, BufferGeometry, BufferAttribute, Color } from 'https://threejs.org/build/three.module.js;
+import { Texture, Vector2, RawShaderMaterial, AdditiveBlending, Points, BufferGeometry, BufferAttribute, Color } from 'https://threejs.org/build/three.module.js';
 
 const get_char_offset = (char) => {
     if (typeof char === 'number') {

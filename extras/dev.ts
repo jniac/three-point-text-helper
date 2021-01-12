@@ -20,7 +20,7 @@ const copy_atlas = async () => {
 const build_three_version = async () => {
   const data = (await fs.readFile(`${config.outdir}/PointTextHelper/index.js`, 'utf-8'))
     .replace(`./atlas-data.js`, `./PointTextHelper/atlas-data.js`)
-    .replace(`from 'three'`, `from '${config.three}`)
+    .replace(`from 'three'`, `from '${config.three}'`)
   await fs.outputFile(`${config.outdir}/PointTextHelper.three.js`, data)
 }
 
