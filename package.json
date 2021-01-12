@@ -2,8 +2,8 @@
   "name": "@jniac/three-point-text-helper",
   "version": "1.0.4",
   "description": "Displaying point text in THREE JS.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/PointTextHelper/index.js",
+  "types": "dist/PointTextHelper/index.d.ts",
   "scripts": {
     "generate-atlas": "ts-node extras/atlas-generator",
     "dev": "ts-node extras/dev.ts",

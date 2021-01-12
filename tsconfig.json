@@ -3,7 +3,7 @@
     // "module": "",
     "target": "ES2015",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/PointTextHelper",
     "rootDir": "./src",
     "moduleResolution": "node",
     "allowUmdGlobalAccess": true,

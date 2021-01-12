@@ -1,6 +1,5 @@
 import * as chokidar from 'chokidar'
 import * as fs from 'fs-extra'
-import * as Path from 'path'
 import express from 'express'
 import { exec } from 'child_process'
 import serveIndex from 'serve-index' 
@@ -10,37 +9,20 @@ const config = {
   entry: 'src',
   outdir: 'dist',
   port: 8000,
-}
-
-const is = {
-  glsl: (path:string) => /\.(frag|vert)$/.test(path),
-  ts: (path:string) => /\.ts$/.test(path),
-}
-
-async function* walk(dir:string) {
-  for await (const d of await fs.opendir(dir)) {
-    const entry = Path.join(dir, d.name)
-    if (d.isDirectory()) {
-      yield* walk(entry)
-    }
-    else if (d.isFile()) {
-      yield entry
-    }
-  }
+  three: 'https://threejs.org/build/three.module.js',
 }
 
 const copy_atlas = async () => {
-  await fs.copyFile(`${config.entry}/atlas-data.js`, `${config.outdir}/atlas-data.js`)
+  await fs.ensureDir(`${config.outdir}/PointTextHelper`)
+  await fs.copyFile(`${config.entry}/atlas-data.js`, `${config.outdir}/PointTextHelper/atlas-data.js`)
 }
 
-// useless since using rollup + typescript
-// const export_glsl = async (path:string) => {
-//   const data = await fs.readFile(path, { encoding:'utf-8' })
-//   const output = Path.resolve(config.outdir, Path.relative(config.entry, path))
-//   await fs.outputFile(`${output}.js`, `export default /* glsl */\`\n${data}\n\``)
-//   await fs.outputFile(`${output}.d.ts`, `declare const _default: string;\nexport default _default;\n`)
-//   console.log(chalk`{cyan export glsl from ${path}}`)
-// }
+const build_three_version = async () => {
+  const data = (await fs.readFile(`${config.outdir}/PointTextHelper/index.js`, 'utf-8'))
+    .replace(`./atlas-data.js`, `./PointTextHelper/atlas-data.js`)
+    .replace(`from 'three'`, `from '${config.three}`)
+  await fs.outputFile(`${config.outdir}/PointTextHelper.three.js`, data)
+}
 
 const compile_ts = () => new Promise<void>(resolve => {
   const t = Date.now()
@@ -61,8 +43,9 @@ chokidar.watch(`${config.entry}/**/*`)
  
   console.log(`${path} has changed`)
 
-  compile_ts()
-  copy_atlas()
+  await copy_atlas()
+  await compile_ts()
+  await build_three_version()
 })
 
 const app = express()
@@ -79,10 +62,27 @@ const build = async () => {
 
   await copy_atlas()
   await compile_ts()
+  await build_three_version()
+
 
   console.log(chalk`initial build done {dim ${Date.now() - t}ms}`)
 }
 
 build()
+
+let startWebpack = false
+if (startWebpack) {
+  console.log(chalk`{cyan webpack (tests/examples) start...}`)
+  const child = exec(`
+  cd tests/examples
+  webpack --watch --mode development
+  `, (err, stdout, stderr) => {
+    if (err) console.error(err)
+    if (stdout) console.log(stdout)
+    if (stderr) console.log(stderr)
+  })
+  child.stdout.pipe(process.stdout)
+  child.stderr.pipe(process.stderr)
+}
 
 console.log('dev started')

@@ -9,7 +9,7 @@ export default {
   input: 'src/index.ts',
   external: ['three', /atlas-data\.js/],
   output: {
-    dir: 'dist',
+    dir: 'dist/PointTextHelper',
     format: 'module',
   },
   plugins: [glslify(glslify_options), typescript()],
