@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { PointTextHelper } from '../../../dist/index'
+import { PointTextHelper } from '../../../dist/PointTextHelper'
 import { scene, camera, renderer } from './three-stage'
 
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils'

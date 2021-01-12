@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import * as stage from './three-stage'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { PointTextHelper, atlas } from '../../../dist/index'
+import { PointTextHelper, atlas } from '../../../dist/PointTextHelper'
 import { threadId } from 'worker_threads'
 
 Object.assign(window, { PointTextHelper, atlas })
