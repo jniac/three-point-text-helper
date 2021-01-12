@@ -11,8 +11,7 @@ camera.position.z = 5
 
 const scene = new Scene()
 
-new OrbitControls(camera, renderer.domElement)
-
+const orbitControls = new OrbitControls(camera, renderer.domElement)
 
 let autoPauseDelay = 30
 let autoPauseTimer = 0
@@ -21,6 +20,7 @@ const autoPauseReset = () => autoPauseTimer = 0
 
 let time = 0, frame = 0, dt = 1 / 60
 const loop = () => {
+  
   requestAnimationFrame(loop)
 
   if (autoPauseTimer <= autoPauseDelay) {
@@ -48,4 +48,5 @@ export {
   renderer,
   setAutoPauseDelay,
   autoPauseReset,
+  orbitControls,
 }
