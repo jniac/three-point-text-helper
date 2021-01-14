@@ -1,7 +1,7 @@
 # Point Text Helper
 "Point Text" Helper for ThreeJS
 
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices/">
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices/">
 <p align="center">
   <img width="600px" src="screenshots/vertices.jpg">
 <p>
@@ -10,16 +10,16 @@
 </p>
 </a>
 
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices-stress/">
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices-stress/">
 <p align="center">
-  <img width="600px" src="screenshots/vertices-stress.jpg">
+  <img width="600px" src="screenshots/vertices-stress-2.jpg">
 <p>
 <p align="center">
   a lot of texts (37212)
 </p>
 </a>
 
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples/dist/vertices-knot/">
+<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices-knot/">
 <p align="center">
   <img width="600px" src="screenshots/vertices-knot.jpg">
 <p>
