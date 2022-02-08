@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import { AxesHelper } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { scene, camera, orbitControls } from '../shared/three-stage.js'
 import { WireSphere } from '../shared/WireSphere.js'
@@ -10,7 +10,7 @@ orbitControls.target.set(0.5, 0.5, -0.2)
 orbitControls.update()
 
 scene.add(new WireSphere()) // background
-scene.add(new THREE.AxesHelper()) // axis
+scene.add(new AxesHelper()) // axis
 scene.add(triangle) // triangle
 scene.add(grid) // grid
 

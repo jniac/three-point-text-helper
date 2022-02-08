@@ -6,7 +6,7 @@ export class WireSphere extends Mesh {
     segments = 30,
     widthSegments = segments * 2,
     heightSegments = segments,
-    color = '#333',
+    color = '#555',
   } = {}) {
     super(
       new SphereBufferGeometry(radius, widthSegments, heightSegments),
