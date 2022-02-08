@@ -31,7 +31,6 @@ export default function get_material(char_max:number) {
     // depthTest: false,
     transparent: true,
     vertexColors: true,
-    flatShading: true,
     depthWrite: false,
   })
 
