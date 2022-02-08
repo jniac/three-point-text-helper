@@ -1,4 +1,5 @@
-import { WebGLRenderer, PerspectiveCamera, Scene } from 'https://threejs.org/build/three.module.js'
+import './cheat.js'
+import { WebGLRenderer, PerspectiveCamera, Scene } from 'three'
 import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js'
 
 const renderer = new WebGLRenderer({ antialias: true })
