@@ -18,15 +18,16 @@ const copy_atlas = async () => {
 }
 
 const build_three_version = async () => {
+  const atlas_data = (await fs.readFile(`${config.outdir}/PointTextHelper/atlas-data.js`, 'utf-8')).slice(15).trim()
   const data = (await fs.readFile(`${config.outdir}/PointTextHelper/index.js`, 'utf-8'))
-    .replace(`./atlas-data.js`, `./PointTextHelper/atlas-data.js`)
-    .replace(`from 'three'`, `from '${config.three}'`)
+    .replace(`import atlas_data from './atlas-data.js';\n`, '')
+    .replace(`from 'three';\n`, `from '${config.three}';\n\nconst atlas_data = ${atlas_data};\n`)
   await fs.outputFile(`${config.outdir}/PointTextHelper.three.js`, data)
 }
 
 const compile_ts = () => new Promise<void>(resolve => {
   const t = Date.now()
-  exec('rollup -c', (err, stdout, stderr) => {
+  exec('npx rollup -c', (err, stdout, stderr) => {
     if (err) {
       console.log(stderr)
       console.log(stdout)
