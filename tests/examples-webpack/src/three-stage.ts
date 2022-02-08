@@ -3,6 +3,7 @@ import * as THREE from 'three'
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
 })
+renderer.setClearAlpha(1)
 renderer.setPixelRatio(2)
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.append(renderer.domElement)

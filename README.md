@@ -67,17 +67,22 @@ pth.displayVertices(geometry.getAttribute('position').array, {
 })
 ```
 
-## "dev" mode, Run the tests/examples
+## "dev" mode & examples
 from a local repository, 2 process:
 - run the library itself + static server
 ```shell
 npm run dev
-# (equivalent to)
-ts-node extras/dev.ts
 ```
+It will watch over any changes into the src folder, and re-build if any.
 http://localhost:8000
 
-- [examples](tests/examples)
+For the "vanilla" js examples, this is enough:
+http://localhost:8000/tests/examples-vanilla/triangle/
+
+- but for the webpack examples, one may start the webpack service:
+```shell
+npm run examples-webpack
+```
 
 
 

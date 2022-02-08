@@ -128,7 +128,6 @@ function get_material(char_max) {
         // depthTest: false,
         transparent: true,
         vertexColors: true,
-        flatShading: true,
         depthWrite: false,
     });
     Object.defineProperty(material, 'opacity', {
