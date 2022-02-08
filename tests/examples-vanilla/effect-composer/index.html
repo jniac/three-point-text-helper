@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Effect Composer</title>
+  <link rel="stylesheet" href="../shared/main.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://threejs.org/build/three.module.js"
+      }
+    }
+  </script>
+  <style>
+    label {
+      margin-right: 8px;
+    }
+    input {
+      transform: translateY(2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="UI">
+    <div><label for="bloom">bloom</label><input id="bloom" type="checkbox" checked></div>
+    <div><label for="half-tones">half-tones</label><input id="half-tones" type="checkbox" checked></div>
+  </div>
+  <script src="index.js" type="module"></script>
+</body>
+</html>
