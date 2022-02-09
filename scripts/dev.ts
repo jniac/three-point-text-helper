@@ -4,6 +4,7 @@ import express from 'express'
 import { exec } from 'child_process'
 import serveIndex from 'serve-index' 
 import chalk from 'chalk'
+import ip from 'ip'
 
 const config = {
   entry: 'src',
@@ -52,7 +53,11 @@ chokidar.watch(`${config.entry}/**/*`)
 const app = express()
 app.use(express.static('.'), serveIndex('.', { icons:true }))
 app.use((req, res) => res.send(req.path))
-app.listen(config.port, () => console.log(chalk`{green static server listening on ${config.port}}`))
+app.listen(config.port, () => {
+  console.log(chalk`{green static server listening:}` 
+    + `\n  http://localhost:${config.port}/tests/`
+    + `\n  http://${ip.address()}:${config.port}/tests/`)
+})
 
 const build = async () => {
 
@@ -84,6 +89,9 @@ if (startWebpack) {
   })
   child.stdout.pipe(process.stdout)
   child.stderr.pipe(process.stderr)
+}
+else {
+  console.log(chalk`{dim (webpack not started, to start the webpack example use {reset.inverse --webpack})}`)
 }
 
 console.log('dev started')
