@@ -15,6 +15,7 @@
       }
     }
   </script>
+  <script type="module" src="../shared/importmap-test.js"></script>
   <style>
     h1 {
       --margin: 32px;
@@ -33,6 +34,7 @@
 </head>
 <body>
   <h1></h1>
+  <div class="warning" style="display: none;">This page uses 'importmap', the feature is actually only supported by chromium-based browsers.</div>
   <script src="index.js" type="module"></script>
 </body>
 </html>
