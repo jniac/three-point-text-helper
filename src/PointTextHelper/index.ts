@@ -5,7 +5,7 @@ import { get_count_and_offsets } from '../atlas-utils.js'
 const CHAR_MAX_LIMIT = 12
 
 const defaultDisplayParams = {
-  position: { x:0, y:0, z:0 }, 
+  position: { x: 0, y: 0, z: 0 }, 
   color: 'white', 
   size: 1,
   text: 'foo',
@@ -13,12 +13,12 @@ const defaultDisplayParams = {
 
 class PointTextHelper extends THREE.Points {
 
-  private charMax:number
+  private charMax: number
 
   constructor({ 
     charMax = 4,
   }:{
-    charMax?:number,
+    charMax?: number,
   } = {}) {
 
     if (charMax > CHAR_MAX_LIMIT) {
@@ -44,7 +44,7 @@ class PointTextHelper extends THREE.Points {
     this.charMax = charMax
   }
 
-  private push(name:string, numbers:ArrayLike<number>) {
+  private push(name: string, numbers: ArrayLike<number>) {
     const geometry = this.geometry as THREE.BufferGeometry
     const buffer = geometry.getAttribute(name)
     const array = new Float32Array(buffer.array.length + numbers.length)
@@ -53,7 +53,7 @@ class PointTextHelper extends THREE.Points {
     geometry.setAttribute(name, new THREE.BufferAttribute(array, buffer.itemSize))
   }
 
-  private pushFill(name:string, value:number, count:number) {
+  private pushFill(name: string, value: number, count: number) {
     const geometry = this.geometry as THREE.BufferGeometry
     const buffer = geometry.getAttribute(name)
     const array = new Float32Array(buffer.array.length + count)
@@ -62,7 +62,7 @@ class PointTextHelper extends THREE.Points {
     geometry.setAttribute(name, new THREE.BufferAttribute(array, buffer.itemSize))
   }
 
-  display(params:Partial<typeof defaultDisplayParams> = defaultDisplayParams) {
+  display(params: Partial<typeof defaultDisplayParams> = defaultDisplayParams) {
 
     params = { ...defaultDisplayParams,  ...params }
 
@@ -83,14 +83,14 @@ class PointTextHelper extends THREE.Points {
     }
   }
 
-  displayVertices(vertices:THREE.Vector3[]|ArrayLike<number>, {
+  displayVertices(vertices: THREE.Vector3[]|ArrayLike<number>, {
     color = 'white',
     size = 1,
     format = undefined,
   }:{
     size?: number,
     color?: string | THREE.Color,
-    format?: (index:number) => string,
+    format?: (index: number) => string,
   } = {}) {
 
     const isFloat32 = vertices instanceof Float32Array
@@ -143,14 +143,14 @@ class PointTextHelper extends THREE.Points {
     }
   }
 
-  displayFaces(geometry:THREE.Geometry|THREE.BufferGeometry, {
+  displayFaces(geometry: THREE.Geometry|THREE.BufferGeometry, {
     color = 'white',
     size = 1,
     format = undefined,
   }:{
     size?: number,
     color?: string | THREE.Color,
-    format?: (index:number) => string,
+    format?: (index: number) => string,
   } = {}) {
 
     if (geometry['isGeometry']) {
@@ -160,9 +160,9 @@ class PointTextHelper extends THREE.Points {
       const array = new Float32Array(length * 3)
       for (let index = 0; index < length; index++) {
         const { a, b, c } = faces[index]
-        const { x:ax, y:ay, z:az } = vertices[a]
-        const { x:bx, y:by, z:bz } = vertices[b]
-        const { x:cx, y:cy, z:cz } = vertices[c]
+        const { x: ax, y: ay, z: az } = vertices[a]
+        const { x: bx, y: by, z: bz } = vertices[b]
+        const { x: cx, y: cy, z: cz } = vertices[c]
         array[index * 3 + 0] = (ax + bx + cx) / 3
         array[index * 3 + 1] = (ay + by + cy) / 3
         array[index * 3 + 2] = (az + bz + cz) / 3
@@ -198,10 +198,10 @@ class PointTextHelper extends THREE.Points {
   }
 
   get z_offset() { return this.material['uniforms'].z_offset.value as number }
-  set z_offset(value:number) { this.material['uniforms'].z_offset.value = value }
+  set z_offset(value: number) { this.material['uniforms'].z_offset.value = value }
 
   get opacity() { return this.material['uniforms'].opacity.value as number }
-  set opacity(value:number) { this.material['uniforms'].opacity.value = value }
+  set opacity(value: number) { this.material['uniforms'].opacity.value = value }
 }
 
 export {
