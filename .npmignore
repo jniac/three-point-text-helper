@@ -3,5 +3,6 @@ rollup.config.js
 src
 tests
 tmp
-extras
+scripts
 NOTE.md
+screenshots

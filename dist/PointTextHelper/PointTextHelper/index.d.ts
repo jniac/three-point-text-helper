@@ -22,7 +22,7 @@ declare class PointTextHelper extends THREE.Points {
         color?: string | THREE.Color;
         format?: (index: number) => string;
     }): any;
-    displayFaces(geometry: THREE.Geometry | THREE.BufferGeometry, { color, size, format, }?: {
+    displayFaces(geometry: THREE.BufferGeometry, { color, size, format, }?: {
         size?: number;
         color?: string | THREE.Color;
         format?: (index: number) => string;

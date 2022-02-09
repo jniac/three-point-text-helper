@@ -242,22 +242,6 @@ class PointTextHelper extends Points {
         }
     }
     displayFaces(geometry, { color = 'white', size = 1, format = undefined, } = {}) {
-        if (geometry['isGeometry']) {
-            geometry = geometry;
-            const { faces, vertices } = geometry;
-            const length = faces.length;
-            const array = new Float32Array(length * 3);
-            for (let index = 0; index < length; index++) {
-                const { a, b, c } = faces[index];
-                const { x: ax, y: ay, z: az } = vertices[a];
-                const { x: bx, y: by, z: bz } = vertices[b];
-                const { x: cx, y: cy, z: cz } = vertices[c];
-                array[index * 3 + 0] = (ax + bx + cx) / 3;
-                array[index * 3 + 1] = (ay + by + cy) / 3;
-                array[index * 3 + 2] = (az + bz + cz) / 3;
-            }
-            this.displayVertices(array, { color, size, format });
-        }
         if (geometry['isBufferGeometry']) {
             geometry = geometry;
             const indexes = geometry.index.array;
