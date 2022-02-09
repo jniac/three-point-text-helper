@@ -193,8 +193,12 @@ class PointTextHelper extends Points {
             this.push(`char_offset_${i}`, offsets[i]);
         }
     }
-    displayVertices(vertices, { color = 'white', size = 1, format = undefined, } = {}) {
+    displayVertices(vertices, options = {}) {
         var _a;
+        if (vertices instanceof BufferGeometry) {
+            return this.displayVertices(vertices.getAttribute('position').array, options);
+        }
+        const { color = 'white', size = 1, format = undefined, } = options;
         const isFloat32 = vertices instanceof Float32Array;
         const { r, g, b } = new Color(color);
         const length = isFloat32 ? vertices.length / 3 : vertices.length;
@@ -207,13 +211,15 @@ class PointTextHelper extends Points {
         for (let i = 0; i < charMax; i++) {
             char_offset_array[i] = new Float32Array(length * 2);
         }
-        for (let index = 0; index < length; index++) {
-            if (isFloat32 === false) {
+        if (isFloat32 === false) {
+            for (let index = 0; index < length; index++) {
                 const { x, y, z } = vertices[index];
                 position_array[index * 3 + 0] = x;
                 position_array[index * 3 + 1] = y;
                 position_array[index * 3 + 2] = z;
             }
+        }
+        for (let index = 0; index < length; index++) {
             color_array[index * 3 + 0] = r;
             color_array[index * 3 + 1] = g;
             color_array[index * 3 + 2] = b;

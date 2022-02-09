@@ -17,11 +17,11 @@ declare class PointTextHelper extends THREE.Points {
     private push;
     private pushFill;
     display(params?: Partial<typeof defaultDisplayParams>): void;
-    displayVertices(vertices: THREE.Vector3[] | ArrayLike<number>, { color, size, format, }?: {
+    displayVertices(vertices: THREE.Vector3[] | ArrayLike<number> | THREE.BufferGeometry, options?: {
         size?: number;
         color?: string | THREE.Color;
         format?: (index: number) => string;
-    }): void;
+    }): any;
     displayFaces(geometry: THREE.Geometry | THREE.BufferGeometry, { color, size, format, }?: {
         size?: number;
         color?: string | THREE.Color;
