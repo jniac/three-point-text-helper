@@ -1,4 +1,4 @@
-import { EffectComposer } from 'https://threejs.org/examples/jsm/postprocessing/EffectComposer.js'
+
 import { Mesh, MeshBasicMaterial, TorusKnotGeometry } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { scene } from '../shared/three-stage.js'
@@ -11,39 +11,45 @@ import { WireSphere } from '../shared/WireSphere.js'
 const sphere = new WireSphere()
 scene.add(sphere)
 
-const torus = new Mesh(
+const knot = new Mesh(
   new TorusKnotGeometry(1.2, .5, 400, 64),
   new MeshBasicMaterial({ color: '#6cf', wireframe: true }),
 )
-scene.add(torus)
+scene.add(knot)
 
 
 
 // texts:
 
-const pth = new PointTextHelper()
+const pth = new PointTextHelper({ charMax: 12 })
 scene.add(pth)
 
-pth.displayVertices(sphere.geometry.getAttribute('position').array, {
+pth.displayVertices(sphere.geometry, {
   color: '#fc9',
-  size: .3,
+  size: .8,
   format: index => `v${index}`,
 })
 
 pth.displayFaces(sphere.geometry, {
   color: '#6cf',
-  size: .3,
+  size: .8,
   format: index => `f${index}`,
 })
 
-pth.displayVertices(torus.geometry.getAttribute('position').array, {
+pth.displayVertices(knot.geometry, {
   color: '#6cf',
-  size: .05,
+  size: .14,
+})
+
+const { count } = pth.geometry.getAttribute('position')
+
+pth.display({
+  color: '#fc9',
+  size: 2,
+  text: `${count + 1} texts`,
 })
 
 
 
 // h1:
-
-const { count } = pth.geometry.getAttribute('position')
-document.querySelector('h1').innerHTML = `Texts count: ${count}`
+document.querySelector('h1').innerHTML = `Texts count: ${count + 1}`
