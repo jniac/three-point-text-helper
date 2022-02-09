@@ -83,15 +83,21 @@ class PointTextHelper extends THREE.Points {
     }
   }
 
-  displayVertices(vertices: THREE.Vector3[]|ArrayLike<number>, {
-    color = 'white',
-    size = 1,
-    format = undefined,
-  }:{
+  displayVertices(vertices: THREE.Vector3[] | ArrayLike<number> | THREE.BufferGeometry, options: {
     size?: number,
     color?: string | THREE.Color,
     format?: (index: number) => string,
   } = {}) {
+
+    if (vertices instanceof THREE.BufferGeometry) {
+      return this.displayVertices(vertices.getAttribute('position').array, options)
+    }
+
+    const {
+      color = 'white',
+      size = 1,
+      format = undefined,
+    } = options
 
     const isFloat32 = vertices instanceof Float32Array
     
@@ -105,19 +111,21 @@ class PointTextHelper extends THREE.Points {
     const size_array = new Float32Array(length)
     const char_count_array = new Float32Array(length)
     const char_offset_array = new Array<Float32Array>(charMax)
+
     for (let i = 0; i < charMax; i++) {
       char_offset_array[i] = new Float32Array(length * 2)
     }
-
-    for (let index = 0; index < length; index++) {
-
-      if (isFloat32 === false) {
+    
+    if (isFloat32 === false) {
+      for (let index = 0; index < length; index++) {
         const { x, y, z } =  vertices[index] as THREE.Vector3
         position_array[index * 3 + 0] = x
         position_array[index * 3 + 1] = y
         position_array[index * 3 + 2] = z
       }
+    }
 
+    for (let index = 0; index < length; index++) {
       color_array[index * 3 + 0] = r
       color_array[index * 3 + 1] = g
       color_array[index * 3 + 2] = b
