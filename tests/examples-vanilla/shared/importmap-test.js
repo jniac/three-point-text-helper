@@ -1,9 +1,4 @@
-const warning = document.querySelector('.warning')
-
 import('three')
-  .then(() => {
-    warning.remove()
-  })
   .catch(e => {
 
     const style = document.createElement('style')
