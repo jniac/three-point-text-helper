@@ -6,6 +6,7 @@
   "types": "dist/PointTextHelper/index.d.ts",
   "scripts": {
     "generate-atlas": "ts-node scripts/atlas-generator",
+    "start": "echo 'start is dev, right?' && npm run dev",
     "dev": "ts-node scripts/dev.ts",
     "examples-webpack": "cd tests/examples-webpack && npx webpack --watch --mode development"
   },
