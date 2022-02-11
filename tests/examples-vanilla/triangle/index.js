@@ -1,7 +1,7 @@
 import { AxesHelper } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { scene, camera, orbitControls } from '../shared/three-stage.js'
-import { WireSphere } from '../shared/WireSphere.js'
+import { WireSphere } from '../shared/three-utils.js'
 import { A, B, C, triangle } from './triangle.js'
 import { axeX, axeY, axeZ, gridCenter, grid } from './grid.js'
 

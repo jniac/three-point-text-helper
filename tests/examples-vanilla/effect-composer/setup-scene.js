@@ -1,7 +1,7 @@
 import { Mesh, MeshBasicMaterial, TorusKnotGeometry } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { scene } from '../shared/three-stage.js'
-import { WireSphere } from '../shared/WireSphere.js'
+import { WireSphere } from '../shared/three-utils.js'
 
 
 

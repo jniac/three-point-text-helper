@@ -1,0 +1,56 @@
+
+.UI {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  padding: 32px;
+  font-size: 12px;
+}
+
+.UI:not(.light) {
+  color: white;
+}
+
+.UI footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 32px;
+}
+
+.UI header > *,
+.UI footer > * {
+  pointer-events: all;
+}
+
+.UI header > * + *,
+.UI footer > * + * {
+  margin-top: 8px;
+}
+
+.UI select,
+.UI button,
+.UI input {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+.UI select {
+  padding: 4px;
+}
+
+.UI .slider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 0;
+}
+.UI .slider label {
+  padding-right: 8px;
+}

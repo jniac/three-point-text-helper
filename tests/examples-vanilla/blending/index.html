@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blending</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://threejs.org/build/three.module.js"
+      }
+    }
+  </script>
+  <style>
+    @import url(../shared/main.css);
+  </style>
+</head>
+<body>
+  <div class="UI light">
+    <header>
+      <select name="" id="">
+        <option value="MultiplyBlending">MultiplyBlending</option>
+        <option value="NormalBlending">NormalBlending</option>
+        <option value="AdditiveBlending">AdditiveBlending</option>
+      </select>
+      <div class="slider">
+        <label for="opacity">opacity</label>
+        <input type="range" id="opacity" min="0" max="1" step="any" value="1">
+      </div>
+    </header>
+    <footer>
+      NOTE: there is no z-sorting currently, so, with the "NormalBlending" some texts may appears in front of closers ones.
+    </footer>
+  </div>
+  <script src="index.js" type="module"></script>
+</body>
+</html>
