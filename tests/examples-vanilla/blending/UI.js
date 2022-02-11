@@ -1,4 +1,7 @@
+import { initUI } from '../shared/UI.js'
 import { pth } from './index.js'
+
+initUI()
 
 const hash = window.location.hash.substring(1)
 
@@ -15,4 +18,9 @@ select.onchange = () => {
 const opacity = document.querySelector('.UI input#opacity')
 opacity.oninput = () => {
   pth.opacity = parseFloat(opacity.value)
+}
+
+const zOffset = document.querySelector('.UI input#zOffset')
+zOffset.oninput = () => {
+  pth.zOffset = parseFloat(zOffset.value)
 }
