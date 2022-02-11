@@ -37,7 +37,12 @@
       </div>
     </header>
     <footer>
-      NOTE: there is no z-sorting currently, so, with the "NormalBlending" some texts may appears in front of closers ones.
+      <p>
+        NOTE: there is no z-sorting currently, so, with the "NormalBlending" to transparent pixels are discarded based on a given threshold (alphaDiscard, 0.5 by default).
+      </p>
+      <p>
+        This technique allows the use the depth buffer with the texts. As a downside, we have little greyed aliased edges sometimes (ex: "Right" over "Front", but not "Front" over "Right")
+      </p>
     </footer>
   </div>
   <script src="index.js" type="module"></script>
