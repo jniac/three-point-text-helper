@@ -1,6 +1,8 @@
 # Point Text Helper
 "Point Text" Helper for ThreeJS
 
+Thousand of tiny texts (labels) in on draw call. 
+
 <a href="https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/stress/">
 <p align="center">
   <img src="screenshots/vanilla-stress-2.jpg">
