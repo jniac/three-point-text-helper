@@ -8,7 +8,7 @@ const hash = window.location.hash.substring(1)
 document.querySelector('.UI').classList.toggle('light', hash !== 'AdditiveBlending')
 
 const select = document.querySelector('.UI select')
-select.value = hash
+select.value = hash || 'MultiplyBlending'
 select.onchange = () => {
   const { value } = select
   window.location.hash = value
