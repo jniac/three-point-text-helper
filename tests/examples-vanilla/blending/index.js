@@ -1,4 +1,4 @@
-import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, MultiplyBlending, NormalBlending, OctahedronGeometry, SphereGeometry, Vector3 } from 'three'
+import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, MultiplyBlending, NormalBlending, OctahedronGeometry, RawShaderMaterial, SphereGeometry, Vector3 } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { camera, orbitControls, renderer, scene } from '../shared/three-stage.js'
 import { LightRig1, WireSphere } from '../shared/three-utils.js'
@@ -102,3 +102,4 @@ pth.displayFaces(wireSphere.geometry, {
   color: '#999',
   size: .5,
 })
+

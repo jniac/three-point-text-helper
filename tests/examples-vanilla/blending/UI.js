@@ -15,9 +15,9 @@ select.onchange = () => {
   window.location.reload()
 }
 
-const opacity = document.querySelector('.UI input#opacity')
-opacity.oninput = () => {
-  pth.opacity = parseFloat(opacity.value)
+const alphaDiscard = document.querySelector('.UI input#alphaDiscard')
+alphaDiscard.oninput = () => {
+  pth.material.alphaDiscard = parseFloat(alphaDiscard.value)
 }
 
 const zOffset = document.querySelector('.UI input#zOffset')
