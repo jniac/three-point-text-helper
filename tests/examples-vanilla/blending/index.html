@@ -37,8 +37,12 @@
       </div>
     </header>
     <footer>
+      <p>NOTE:</p>
       <p>
-        NOTE: there is no z-sorting currently, so, with the "NormalBlending" to transparent pixels are discarded based on a given threshold (alphaDiscard, 0.5 by default).
+        "alphaDiscard" works only with "NormalBlending"
+      </p>
+      <p>
+        There is no z-sorting currently, so, with the "NormalBlending" the transparent pixels are discarded based on a given threshold (alphaDiscard, 0.5 by default).
       </p>
       <p>
         This technique allows the use the depth buffer with the texts. As a downside, we have little greyed aliased edges sometimes (ex: "Right" over "Front", but not "Front" over "Right")
