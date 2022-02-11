@@ -1,7 +1,7 @@
 # Point Text Helper
 "Point Text" Helper for ThreeJS
 
-Thousand of tiny texts (labels) in on draw call. 
+Thousand of tiny texts (labels) in one draw call. 
 
 <a href="https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/stress/">
 <p align="center">
@@ -13,33 +13,11 @@ Thousand of tiny texts (labels) in on draw call.
 </p>
 </a>
 
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices/">
-<p align="center">
-  <img width="400px" src="screenshots/vertices.jpg">
-<p>
-<p align="center">
-  some texts (position, color, size)
-</p>
-</a>
-
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices-stress/">
-<p align="center">
-  <img width="400px" src="screenshots/vertices-stress-2.jpg">
-<p>
-<p align="center">
-  a lot of texts (37212)
-</p>
-</a>
-
-<a href="https://jniac.github.io/three-point-text-helper/tests/examples-webpack/dist/vertices-knot/">
-<p align="center">
-  <img width="400px" src="screenshots/vertices-knot.jpg">
-<p>
-<p align="center">
-  z_offset (for better readability)
-</p>
-</a>
-
+## Demos
+- [triangle](https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/triangle/)
+- [stress](https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/stress/)
+- [effect-composer](https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/effect-composer/)
+- [blending](https://jniac.github.io/three-point-text-helper/tests/examples-vanilla/blending/)
 
 ## Install
 
