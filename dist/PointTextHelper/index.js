@@ -287,11 +287,17 @@ class PointTextHelper extends Points {
             this.displayVertices(array, { color, size, format });
         }
     }
-    get z_offset() { return this.material['uniforms'].z_offset.value; }
-    set z_offset(value) { this.material['uniforms'].z_offset.value = value; }
-    // @ts-ignore
+    get zOffset() { return this.material.uniforms.z_offset.value; }
+    set zOffset(value) {
+        const material = this.material;
+        if (material.uniforms.z_offset.value !== value) {
+            material.uniforms.z_offset.value = value;
+            material.uniformsNeedUpdate = true;
+        }
+    }
+    get z_offset() { return this.zOffset; }
+    set z_offset(value) { this.zOffset = value; }
     get opacity() { return this.material.opacity; }
-    // @ts-ignore
     set opacity(value) { this.material.opacity = value; }
 }
 

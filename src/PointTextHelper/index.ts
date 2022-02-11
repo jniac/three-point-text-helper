@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import get_material from './get_material.js'
 import { get_count_and_offsets } from '../atlas-utils.js'
-import { Color, ColorRepresentation } from 'three'
+import { Color, ColorRepresentation, RawShaderMaterial } from 'three'
 
 // CHAR_MAX_LIMIT depends from the max number of gl attributes.
 const CHAR_MAX_LIMIT = 12
@@ -210,14 +210,21 @@ class PointTextHelper extends THREE.Points {
       this.displayVertices(array, { color, size, format })
     }
   }
+  
+  get zOffset() { return (this.material as RawShaderMaterial).uniforms.z_offset.value as number }
+  set zOffset(value: number) { 
+    const material = this.material as RawShaderMaterial
+    if (material.uniforms.z_offset.value !== value) {
+      material.uniforms.z_offset.value = value 
+      material.uniformsNeedUpdate = true
+    }
+  }
 
-  get z_offset() { return this.material['uniforms'].z_offset.value as number }
-  set z_offset(value: number) { this.material['uniforms'].z_offset.value = value }
+  get z_offset() { return this.zOffset }
+  set z_offset(value: number) { this.zOffset = value }
 
-  // @ts-ignore
-  get opacity() { return this.material.opacity as number }
-  // @ts-ignore
-  set opacity(value: number) { this.material.opacity = value }
+  get opacity() { return (this.material as RawShaderMaterial).opacity as number }
+  set opacity(value: number) { (this.material as RawShaderMaterial).opacity = value }
 }
 
 export {

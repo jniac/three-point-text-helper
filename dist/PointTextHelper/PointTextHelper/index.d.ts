@@ -31,6 +31,8 @@ declare class PointTextHelper extends THREE.Points {
         color?: string | THREE.Color;
         format?: (index: number) => string;
     }): void;
+    get zOffset(): number;
+    set zOffset(value: number);
     get z_offset(): number;
     set z_offset(value: number);
     get opacity(): number;
