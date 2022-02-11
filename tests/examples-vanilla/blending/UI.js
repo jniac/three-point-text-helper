@@ -10,8 +10,7 @@ document.querySelector('.UI').classList.toggle('light', hash !== 'AdditiveBlendi
 const select = document.querySelector('.UI select')
 select.value = hash || 'MultiplyBlending'
 select.onchange = () => {
-  const { value } = select
-  window.location.hash = value
+  window.location.hash = select.value
   window.location.reload()
 }
 
@@ -22,5 +21,5 @@ alphaDiscard.oninput = () => {
 
 const zOffset = document.querySelector('.UI input#zOffset')
 zOffset.oninput = () => {
-  pth.zOffset = parseFloat(zOffset.value)
+  pth.material.zOffset = parseFloat(zOffset.value)
 }
