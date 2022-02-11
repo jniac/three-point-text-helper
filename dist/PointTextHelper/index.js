@@ -1,5 +1,5 @@
 import atlas_data from './atlas-data.js';
-import { Texture, Vector2, RawShaderMaterial, NormalBlending, MultiplyBlending, Points, AdditiveBlending, BufferGeometry, BufferAttribute, Color } from 'three';
+import { Texture, RawShaderMaterial, Vector2, NormalBlending, MultiplyBlending, Points, AdditiveBlending, BufferGeometry, BufferAttribute, Color } from 'three';
 
 const get_char_offset = (char) => {
     if (typeof char === 'number') {
@@ -64,7 +64,7 @@ var atlas = /*#__PURE__*/Object.freeze({
 
 var vertexShaderSource = "precision highp float;\n#define GLSLIFY 1\n\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform float z_offset;\n\nattribute vec3 position;\n\nattribute float char_count;\nvarying float v_char_count;\n\nattribute float size;\n\nattribute vec3 color;\nvarying vec3 v_color;\n\n// REPLACE-DECLARE:\nattribute vec2 char_offset_X;\nvarying vec2 v_char_offset_X;\n// REPLACE-END\n\nvoid main() {\n\n  v_char_count = char_count;\n  v_color = color;\n  \n  // REPLACE-COMPUTE:\n  v_char_offset_X = char_offset_X;\n  // REPLACE-END\n  \n  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n  gl_Position = projectionMatrix * mvPosition;\n  gl_Position.z += z_offset;\n\tgl_PointSize = size * 2000.0 / -mvPosition.z;\n}"; // eslint-disable-line
 
-var fragmentShaderSource = "precision highp float;\n#define GLSLIFY 1\n\n// #define MULTIPLY\n\nuniform sampler2D atlas_texture;\nuniform float char_max;\nuniform vec2 char_size;\nuniform float char_aspect;\nuniform float opacity;\n\nvarying float v_char_count;\nvarying vec3 v_color;\n\n// REPLACE-DECLARE:\nvarying vec2 v_char_offset_X;\n// REPLACE-END\n\nvec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {\n  float x = \n    (position.x * char_max \n    + offset.x \n    - index) * char_size.x;\n  float y = 1.0 - (\n    position.y \n    + offset.y\n    ) * char_size.y;\n  return vec2(x, y);\n}\n\nvec4 get_texel(in vec2 position, in vec2 offset, float index) {\n#ifdef MULTIPLY\n  float a = texture2D(atlas_texture, get_uv_coords(position, offset, index)).a;\n  return vec4(mix(vec3(1.0), v_color, opacity * a), 1.0);\n#else\n  return vec4(v_color, opacity * texture2D(atlas_texture, get_uv_coords(position, offset, index)).a);\n#endif\n}\n\nvoid main() {\n\n  vec2 position = gl_PointCoord;\n\n  position.x += -(char_max - v_char_count) / char_max / 2.0;\n\n  position.y *= char_max * char_aspect;\n  position.y += (1.0 - char_max * char_aspect) / 2.0;\n\n  bool x_out = position.x < 0.0 || position.x > v_char_count / char_max;\n  bool y_out = position.y < 0.0 || position.y > 1.0;\n\n  if (x_out || y_out) {\n    // gl_FragColor = vec4(1.0);\n    // return;\n    discard;\n  }\n\n  // REPLACE-COMPUTE:\n  if (position.x < 1.0 / char_max) {\n    gl_FragColor = get_texel(position, v_char_offset_X, 0.0);\n  } else if (position.x < 2.0 / char_max) {\n    gl_FragColor = get_texel(position, v_char_offset_X, 1.0);\n  } else {\n    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n  }\n  // REPLACE-END\n}\n"; // eslint-disable-line
+var fragmentShaderSource = "precision highp float;\n#define GLSLIFY 1\n\nuniform sampler2D atlas_texture;\nuniform float char_max;\nuniform vec2 char_size;\nuniform float char_aspect;\nuniform float opacity;\n\n#ifdef BLEND_NORMAL\nuniform float blend_mode_normal_alpha_discard;\n#endif\n\nvarying float v_char_count;\nvarying vec3 v_color;\n\n// REPLACE-DECLARE:\nvarying vec2 v_char_offset_X;\n// REPLACE-END\n\nvec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {\n  float x = \n    (position.x * char_max \n    + offset.x \n    - index) * char_size.x;\n  float y = 1.0 - (\n    position.y \n    + offset.y\n    ) * char_size.y;\n  return vec2(x, y);\n}\n\nvec4 get_texel(in vec2 position, in vec2 offset, float index) {\n#ifdef BLEND_MULTIPLY\n  float a = texture2D(atlas_texture, get_uv_coords(position, offset, index)).a;\n  return vec4(mix(vec3(1.0), v_color, opacity * a), 1.0);\n#else\n  return vec4(v_color, opacity * texture2D(atlas_texture, get_uv_coords(position, offset, index)).a);\n#endif\n}\n\nvoid main() {\n\n  vec2 position = gl_PointCoord;\n\n  position.x += -(char_max - v_char_count) / char_max / 2.0;\n\n  position.y *= char_max * char_aspect;\n  position.y += (1.0 - char_max * char_aspect) / 2.0;\n\n  bool x_out = position.x < 0.0 || position.x > v_char_count / char_max;\n  bool y_out = position.y < 0.0 || position.y > 1.0;\n\n  if (x_out || y_out) {\n    // gl_FragColor = vec4(1.0);\n    // return;\n    discard;\n  }\n\n  // REPLACE-COMPUTE:\n  if (position.x < 1.0 / char_max) {\n    gl_FragColor = get_texel(position, v_char_offset_X, 0.0);\n  } else if (position.x < 2.0 / char_max) {\n    gl_FragColor = get_texel(position, v_char_offset_X, 1.0);\n  } else {\n    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n  }\n  // REPLACE-END\n\n#ifdef BLEND_NORMAL\n  if (gl_FragColor.a < blend_mode_normal_alpha_discard) discard;\n#endif\n}\n"; // eslint-disable-line
 
 const get_numbers = (max) => {
     const array = new Array(max);
@@ -110,36 +110,59 @@ const img = document.createElement('img');
 img.src = data;
 const texture = new Texture(img);
 img.onload = () => texture.needsUpdate = true;
-function get_material(char_max, blending, zOffset) {
-    const [vertexShader, fragmentShader] = get_shaders(char_max);
-    const uniforms = {
-        atlas_texture: { value: texture },
-        opacity: { value: 1 },
-        z_offset: { value: zOffset },
-        char_max: { value: char_max },
-        char_size: { value: new Vector2(char_width / width, char_height / height) },
-        char_aspect: { value: char_width / char_height },
-    };
-    const defines = {};
-    if (blending === MultiplyBlending) {
-        defines.MULTIPLY = true;
+class PointTextHelperMaterial extends RawShaderMaterial {
+    constructor(char_max, blending, zOffset) {
+        console.log('PointTextHelperMaterial');
+        const [vertexShader, fragmentShader] = get_shaders(char_max);
+        const uniforms = {
+            atlas_texture: { value: texture },
+            opacity: { value: 1 },
+            z_offset: { value: zOffset },
+            char_max: { value: char_max },
+            char_size: { value: new Vector2(char_width / width, char_height / height) },
+            char_aspect: { value: char_width / char_height },
+            blend_mode_normal_alpha_discard: { value: .5 },
+        };
+        const defines = {};
+        if (blending === MultiplyBlending) {
+            defines.BLEND_MULTIPLY = true;
+        }
+        if (blending === NormalBlending) {
+            defines.BLEND_NORMAL = true;
+        }
+        console.log(uniforms);
+        super({
+            uniforms,
+            defines,
+            vertexShader,
+            fragmentShader,
+            vertexColors: true,
+            depthTest: true,
+            blending,
+            transparent: blending === NormalBlending,
+            depthWrite: blending === NormalBlending,
+        });
+        console.log('yoooooooo');
+        console.log(this.uniforms);
     }
-    const material = new RawShaderMaterial({
-        uniforms,
-        defines,
-        vertexShader,
-        fragmentShader,
-        blending,
-        // depthTest: false,
-        transparent: blending === NormalBlending,
-        vertexColors: true,
-        depthWrite: false,
-    });
-    Object.defineProperty(material, 'opacity', {
-        get: () => material.uniforms.opacity.value,
-        set: (value) => material.uniforms.opacity.value = value,
-    });
-    return material;
+    get alpha() { return this.uniforms.opacity.value; }
+    set alpha(value) {
+        this.uniforms.opacity.value = value;
+    }
+    get zOffset() { return this.uniforms.z_offset.value; }
+    set zOffset(value) {
+        if (this.uniforms.z_offset.value !== value) {
+            this.uniforms.z_offset.value = value;
+            this.uniformsNeedUpdate = true;
+        }
+    }
+    get alphaDiscard() { return this.uniforms.blend_mode_normal_alpha_discard.value; }
+    set alphaDiscard(value) {
+        if (this.uniforms.blend_mode_normal_alpha_discard.value !== value) {
+            this.uniforms.blend_mode_normal_alpha_discard.value = value;
+            this.uniformsNeedUpdate = true;
+        }
+    }
 }
 
 // CHAR_MAX_LIMIT depends from the max number of gl attributes.
@@ -164,7 +187,7 @@ class PointTextHelper extends Points {
         for (let i = 0; i < charMax; i++) {
             geometry.setAttribute(`char_offset_${i}`, new BufferAttribute(new Float32Array(0), 2));
         }
-        const material = get_material(charMax, blending, zOffset);
+        const material = new PointTextHelperMaterial(charMax, blending, zOffset);
         // const material = new THREE.PointsMaterial({ color: 0x888888 });
         super(geometry, material);
         this.charMax = charMax;
@@ -287,18 +310,6 @@ class PointTextHelper extends Points {
             this.displayVertices(array, { color, size, format });
         }
     }
-    get zOffset() { return this.material.uniforms.z_offset.value; }
-    set zOffset(value) {
-        const material = this.material;
-        if (material.uniforms.z_offset.value !== value) {
-            material.uniforms.z_offset.value = value;
-            material.uniformsNeedUpdate = true;
-        }
-    }
-    get z_offset() { return this.zOffset; }
-    set z_offset(value) { this.zOffset = value; }
-    get opacity() { return this.material.opacity; }
-    set opacity(value) { this.material.opacity = value; }
 }
 
 export { PointTextHelper, atlas };

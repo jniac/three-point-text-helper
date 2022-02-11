@@ -1,12 +1,14 @@
 precision highp float;
 
-// #define MULTIPLY
-
 uniform sampler2D atlas_texture;
 uniform float char_max;
 uniform vec2 char_size;
 uniform float char_aspect;
 uniform float opacity;
+
+#ifdef BLEND_NORMAL
+uniform float blend_mode_normal_alpha_discard;
+#endif
 
 varying float v_char_count;
 varying vec3 v_color;
@@ -28,7 +30,7 @@ vec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {
 }
 
 vec4 get_texel(in vec2 position, in vec2 offset, float index) {
-#ifdef MULTIPLY
+#ifdef BLEND_MULTIPLY
   float a = texture2D(atlas_texture, get_uv_coords(position, offset, index)).a;
   return vec4(mix(vec3(1.0), v_color, opacity * a), 1.0);
 #else
@@ -63,4 +65,8 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
   }
   // REPLACE-END
+
+#ifdef BLEND_NORMAL
+  if (gl_FragColor.a < blend_mode_normal_alpha_discard) discard;
+#endif
 }
