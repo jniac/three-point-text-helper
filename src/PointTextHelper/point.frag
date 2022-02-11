@@ -1,5 +1,7 @@
 precision highp float;
 
+// #define MULTIPLY
+
 uniform sampler2D atlas_texture;
 uniform float char_max;
 uniform vec2 char_size;
@@ -26,7 +28,12 @@ vec2 get_uv_coords(in vec2 position, in vec2 offset, float index) {
 }
 
 vec4 get_texel(in vec2 position, in vec2 offset, float index) {
-  return texture2D(atlas_texture, get_uv_coords(position, offset, index)) * vec4(v_color, opacity);
+#ifdef MULTIPLY
+  float a = texture2D(atlas_texture, get_uv_coords(position, offset, index)).a;
+  return vec4(mix(vec3(1.0), v_color, opacity * a), 1.0);
+#else
+  return vec4(v_color, opacity * texture2D(atlas_texture, get_uv_coords(position, offset, index)).a);
+#endif
 }
 
 void main() {

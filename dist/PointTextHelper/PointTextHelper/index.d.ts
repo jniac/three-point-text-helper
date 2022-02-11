@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { ColorRepresentation } from 'three';
 declare const defaultDisplayParams: {
     position: {
         x: number;
@@ -9,17 +10,20 @@ declare const defaultDisplayParams: {
     size: number;
     text: string;
 };
+declare type DisplayParams = Partial<typeof defaultDisplayParams>;
 declare class PointTextHelper extends THREE.Points {
     private charMax;
-    constructor({ charMax, }?: {
+    constructor({ charMax, blending, zOffset, }?: {
         charMax?: number;
+        blending?: THREE.Blending;
+        zOffset?: number;
     });
     private push;
     private pushFill;
-    display(params?: Partial<typeof defaultDisplayParams>): void;
+    display(params?: DisplayParams | DisplayParams[]): void;
     displayVertices(vertices: THREE.Vector3[] | ArrayLike<number> | THREE.BufferGeometry, options?: {
-        size?: number;
-        color?: string | THREE.Color;
+        size?: number | ((index: number) => number);
+        color?: ColorRepresentation | ((index: number) => ColorRepresentation);
         format?: (index: number) => string;
     }): any;
     displayFaces(geometry: THREE.BufferGeometry, { color, size, format, }?: {

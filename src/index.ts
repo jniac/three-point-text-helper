@@ -1,3 +1,2 @@
-import * as atlas from './atlas'
-export { atlas }
-export { PointTextHelper } from './PointTextHelper'
+export * as atlas from './atlas'
+export * from './PointTextHelper'

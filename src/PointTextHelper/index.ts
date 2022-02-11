@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 import get_material from './get_material.js'
 import { get_count_and_offsets } from '../atlas-utils.js'
+import { Color, ColorRepresentation } from 'three'
 
+// CHAR_MAX_LIMIT depends from the max number of gl attributes.
 const CHAR_MAX_LIMIT = 12
 
 const defaultDisplayParams = {
@@ -11,14 +13,20 @@ const defaultDisplayParams = {
   text: 'foo',
 }
 
+type DisplayParams = Partial<typeof defaultDisplayParams>
+
 class PointTextHelper extends THREE.Points {
 
   private charMax: number
 
   constructor({ 
     charMax = 4,
+    blending = THREE.AdditiveBlending,
+    zOffset = -0.01,
   }:{
-    charMax?: number,
+    charMax?: number
+    blending?: THREE.Blending
+    zOffset?: number
   } = {}) {
 
     if (charMax > CHAR_MAX_LIMIT) {
@@ -36,7 +44,7 @@ class PointTextHelper extends THREE.Points {
       geometry.setAttribute(`char_offset_${i}`, new THREE.BufferAttribute(new Float32Array(0), 2))
     }
     
-    const material = get_material(charMax)
+    const material = get_material(charMax, blending, zOffset)
     // const material = new THREE.PointsMaterial({ color: 0x888888 });
 
     super(geometry, material)
@@ -62,7 +70,12 @@ class PointTextHelper extends THREE.Points {
     geometry.setAttribute(name, new THREE.BufferAttribute(array, buffer.itemSize))
   }
 
-  display(params: Partial<typeof defaultDisplayParams> = defaultDisplayParams) {
+  display(params: DisplayParams | DisplayParams[] = defaultDisplayParams) {
+
+    if (Array.isArray(params)) {
+      params.forEach(p => this.display(p))
+      return
+    }
 
     params = { ...defaultDisplayParams,  ...params }
 
@@ -84,8 +97,8 @@ class PointTextHelper extends THREE.Points {
   }
 
   displayVertices(vertices: THREE.Vector3[] | ArrayLike<number> | THREE.BufferGeometry, options: {
-    size?: number,
-    color?: string | THREE.Color,
+    size?: number | ((index: number) => number),
+    color?: ColorRepresentation | ((index: number) => ColorRepresentation),
     format?: (index: number) => string,
   } = {}) {
 
@@ -101,7 +114,16 @@ class PointTextHelper extends THREE.Points {
 
     const isFloat32 = vertices instanceof Float32Array
     
-    const { r, g, b } = new THREE.Color(color)
+    const getColor = (typeof color === 'function'
+      ? (index: number) => new Color(color(index))
+      : (() => {
+        const c = new Color(color)
+        return () => c
+      })())
+
+    const getSize = (typeof size === 'function'
+      ? (index: number) => size(index)
+      : () => size)
 
     const length = isFloat32 ? vertices.length / 3 : vertices.length
     const { charMax } = this
@@ -126,11 +148,12 @@ class PointTextHelper extends THREE.Points {
     }
 
     for (let index = 0; index < length; index++) {
-      color_array[index * 3 + 0] = r
-      color_array[index * 3 + 1] = g
-      color_array[index * 3 + 2] = b
+      const c = getColor(index)
+      color_array[index * 3 + 0] = c.r
+      color_array[index * 3 + 1] = c.g
+      color_array[index * 3 + 2] = c.b
 
-      size_array[index] = size
+      size_array[index] = getSize(index)
 
       const text = format?.(index) ?? index.toString(10)
       const { count, offsets } = get_count_and_offsets(text, charMax)
@@ -191,8 +214,10 @@ class PointTextHelper extends THREE.Points {
   get z_offset() { return this.material['uniforms'].z_offset.value as number }
   set z_offset(value: number) { this.material['uniforms'].z_offset.value = value }
 
-  get opacity() { return this.material['uniforms'].opacity.value as number }
-  set opacity(value: number) { this.material['uniforms'].opacity.value = value }
+  // @ts-ignore
+  get opacity() { return this.material.opacity as number }
+  // @ts-ignore
+  set opacity(value: number) { this.material.opacity = value }
 }
 
 export {
