@@ -14,6 +14,11 @@ select.onchange = () => {
   window.location.reload()
 }
 
+const alpha = document.querySelector('.UI input#alpha')
+alpha.oninput = () => {
+  pth.material.alpha = parseFloat(alpha.value)
+}
+
 const alphaDiscard = document.querySelector('.UI input#alphaDiscard')
 alphaDiscard.oninput = () => {
   pth.material.alphaDiscard = parseFloat(alphaDiscard.value)

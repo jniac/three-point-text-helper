@@ -60,6 +60,54 @@
   align-items: center;
   padding: 2px 0;
 }
+
 .UI .slider label {
   padding-right: 8px;
+}
+
+.UI:not(.light) input[type=range] {
+  --color: white;
+}
+
+.UI input[type=range] {
+  --thumb: 12px;
+  --track-height: 4px;
+  --color: #000;
+  -webkit-appearance: none; 
+  background: transparent;
+}
+
+.UI input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+.UI input[type=range]:focus {
+  outline: none;
+}
+
+.UI input[type=range]::-ms-track {
+  /* width: 100%; */
+  cursor: pointer;
+
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+.UI input[type=range]::-webkit-slider-runnable-track {
+  height: var(--track-height);
+  cursor: pointer;
+  border: solid 1px var(--color);
+  border-radius: calc(var(--track-height) / 2);
+}
+
+.UI input[type=range]::-webkit-slider-thumb {
+  height: var(--thumb);
+  width: var(--thumb);
+  border-radius: 50%;
+  border: solid 1px var(--color);
+  background: var(--color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: calc((var(--track-height) - var(--thumb)) / 2 - 1px);
 }
