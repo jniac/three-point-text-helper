@@ -1,15 +1,9 @@
-import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, MultiplyBlending, NormalBlending, OctahedronGeometry, RawShaderMaterial, SphereGeometry, Vector3 } from 'three'
+import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, OctahedronGeometry, RawShaderMaterial, SphereGeometry, Vector3 } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { camera, orbitControls, renderer, scene } from '../shared/three-stage.js'
 import { LightRig1, WireSphere } from '../shared/three-utils.js'
+import { getBlending } from './blending.js'
 import './UI.js'
-
-const getBlending = () => {
-  const hash = window.location.hash.substring(1)
-  if (hash === 'NormalBlending') return NormalBlending
-  if (hash === 'AdditiveBlending') return AdditiveBlending
-  return MultiplyBlending
-}
 
 renderer.setClearColor(getBlending() !== AdditiveBlending ? 'white' : '#333')
 
