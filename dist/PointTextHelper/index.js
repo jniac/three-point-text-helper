@@ -1,5 +1,14 @@
 import atlas_data from './atlas-data.js';
-import { Texture, RawShaderMaterial, Vector2, NormalBlending, MultiplyBlending, Points, AdditiveBlending, BufferGeometry, BufferAttribute, Color } from 'three';
+import { Texture, RawShaderMaterial, Vector2, NormalBlending, MultiplyBlending, Points, BufferGeometry, BufferAttribute, AdditiveBlending, Color } from 'three';
+
+const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz #@&$%?!+-_=*/\\|[](){}<>.;:,×';
+const width = 4096;
+const height = 256;
+const grid_width = 64;
+const grid_height = 2;
+const char_width = 64;
+const char_height = 120;
+const data = atlas_data;
 
 const get_char_offset = (char) => {
     if (typeof char === 'number') {
@@ -35,31 +44,22 @@ const get_count_and_offsets = (s, max = 4) => {
 
 var atlasUtils = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    get_char_offset: get_char_offset,
     get_char_index: get_char_index,
+    get_char_offset: get_char_offset,
     get_count_and_offsets: get_count_and_offsets
 });
 
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz #@&$%?!+-_=*/\\|[](){}<>.;:,×';
-const width = 4096;
-const height = 256;
-const grid_width = 64;
-const grid_height = 2;
-const char_width = 64;
-const char_height = 120;
-const data = atlas_data;
-
 var atlas = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    chars: chars,
-    width: width,
-    height: height,
-    grid_width: grid_width,
-    grid_height: grid_height,
-    char_width: char_width,
     char_height: char_height,
+    char_width: char_width,
+    chars: chars,
     data: data,
-    utils: atlasUtils
+    grid_height: grid_height,
+    grid_width: grid_width,
+    height: height,
+    utils: atlasUtils,
+    width: width
 });
 
 var vertexShaderSource = "precision highp float;\n#define GLSLIFY 1\n\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform float z_offset;\n\nattribute vec3 position;\n\nattribute float char_count;\nvarying float v_char_count;\n\nattribute float size;\n\nattribute vec3 color;\nvarying vec3 v_color;\n\n// REPLACE-DECLARE:\nattribute vec2 char_offset_X;\nvarying vec2 v_char_offset_X;\n// REPLACE-END\n\nvoid main() {\n\n  v_char_count = char_count;\n  v_color = color;\n  \n  // REPLACE-COMPUTE:\n  v_char_offset_X = char_offset_X;\n  // REPLACE-END\n  \n  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n  gl_Position = projectionMatrix * mvPosition;\n  gl_Position.z += z_offset;\n\tgl_PointSize = size * 2000.0 / -mvPosition.z;\n}"; // eslint-disable-line
@@ -109,10 +109,10 @@ const get_shaders = (char_max) => {
 const img = document.createElement('img');
 img.src = data;
 const texture = new Texture(img);
+texture.generateMipmaps = false; // Important, otherwise the texture is blurry (because texture LOD is not working here).
 img.onload = () => texture.needsUpdate = true;
 class PointTextHelperMaterial extends RawShaderMaterial {
     constructor(char_max, blending, zOffset) {
-        console.log('PointTextHelperMaterial');
         const [vertexShader, fragmentShader] = get_shaders(char_max);
         const uniforms = {
             atlas_texture: { value: texture },
@@ -130,7 +130,6 @@ class PointTextHelperMaterial extends RawShaderMaterial {
         if (blending === NormalBlending) {
             defines.BLEND_NORMAL = true;
         }
-        console.log(uniforms);
         super({
             uniforms,
             defines,
@@ -142,8 +141,6 @@ class PointTextHelperMaterial extends RawShaderMaterial {
             transparent: blending === NormalBlending,
             depthWrite: blending === NormalBlending,
         });
-        console.log('yoooooooo');
-        console.log(this.uniforms);
     }
     get alpha() { return this.uniforms.opacity.value; }
     set alpha(value) {
@@ -188,7 +185,7 @@ class PointTextHelper extends Points {
             geometry.setAttribute(`char_offset_${i}`, new BufferAttribute(new Float32Array(0), 2));
         }
         const material = new PointTextHelperMaterial(charMax, blending, zOffset);
-        // const material = new THREE.PointsMaterial({ color: 0x888888 });
+        // const material = new PointsMaterial({ color: 0x888888 });
         super(geometry, material);
         this.charMax = charMax;
     }

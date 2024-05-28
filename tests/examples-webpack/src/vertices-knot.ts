@@ -1,8 +1,7 @@
 import * as THREE from 'three'
-import * as stage from './three-stage'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { PointTextHelper, atlas } from '../../../dist/PointTextHelper'
-import { threadId } from 'worker_threads'
+import * as stage from './three-stage'
 
 Object.assign(window, { PointTextHelper, atlas })
 
@@ -10,14 +9,14 @@ new OrbitControls(stage.camera, stage.renderer.domElement)
 
 {
   const background = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(10, 60, 30),
-    new THREE.MeshBasicMaterial({ 
-      color:'#333', 
-      wireframe:true,
+    new THREE.SphereGeometry(10, 60, 30),
+    new THREE.MeshBasicMaterial({
+      color: '#333',
+      wireframe: true,
     }),
   )
   stage.scene.add(background)
-  const ph = new PointTextHelper({ charMax:6 })
+  const ph = new PointTextHelper({ charMax: 6 })
   background.add(ph)
   ph.displayVertices(background.geometry.attributes['position'].array as Float32Array, {
     size: .4,
@@ -48,8 +47,8 @@ new OrbitControls(stage.camera, stage.renderer.domElement)
 
 const mesh = new THREE.Mesh(
   new THREE.TorusKnotGeometry(1, .4, 128 * 1.5, 8),
-  new THREE.MeshPhysicalMaterial({ 
-    color:'#0c9', 
+  new THREE.MeshPhysicalMaterial({
+    color: '#0c9',
     // wireframe:true,
     polygonOffset: true,
     polygonOffsetFactor: 1,
@@ -72,10 +71,9 @@ mesh.add(new THREE.Mesh(
 ))
 
 {
-  const ph = new PointTextHelper({ charMax:6 })
+  const ph = new PointTextHelper({ charMax: 6 })
   mesh.add(ph)
-  console.log(mesh.geometry.vertices.length)
-  ph.displayVertices(mesh.geometry.vertices, {
+  ph.displayVertices(mesh.geometry.getAttribute('position').array, {
     size: .2,
     color: '#fff',
     format: i => `v${i}`,
@@ -88,8 +86,8 @@ mesh.add(new THREE.Mesh(
   })
   Object.assign(window, { ph })
 
-  window.addEventListener('z_offset_0', () => ph.z_offset = 0)
-  window.addEventListener('z_offset_default', () => ph.z_offset = -.01)
-  window.addEventListener('z_offset_big', () => ph.z_offset = -.05)
-  window.addEventListener('z_offset_max', () => ph.z_offset = -1)
+  window.addEventListener('z_offset_0', () => ph.material.zOffset = 0)
+  window.addEventListener('z_offset_default', () => ph.material.zOffset = -.01)
+  window.addEventListener('z_offset_big', () => ph.material.zOffset = -.05)
+  window.addEventListener('z_offset_max', () => ph.material.zOffset = -1)
 }

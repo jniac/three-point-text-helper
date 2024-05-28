@@ -1,11 +1,11 @@
-import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, OctahedronGeometry, RawShaderMaterial, SphereGeometry, Vector3 } from 'three'
+import { AdditiveBlending, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, OctahedronGeometry, SphereGeometry, Vector3 } from 'three'
 import { PointTextHelper } from '../../../dist/PointTextHelper.three.js'
 import { camera, orbitControls, renderer, scene } from '../shared/three-stage.js'
 import { LightRig1, WireSphere } from '../shared/three-utils.js'
-import { getBlending } from './blending.js'
 import './UI.js'
+import { getBlending } from './blending.js'
 
-renderer.setClearColor(getBlending() !== AdditiveBlending ? 'white' : '#333')
+renderer.setClearColor(getBlending() !== AdditiveBlending ? 'white' : '#111')
 
 camera.position.set(5, 0.5, -0.5)
 orbitControls.update()
@@ -30,7 +30,7 @@ scene.add(sphere)
 const octahedron = new Mesh(
   new OctahedronGeometry(),
   new MeshPhysicalMaterial({
-    color: '#ccc',
+    color: '#fff',
   })
 )
 scene.add(octahedron)

@@ -85,5 +85,8 @@ http://localhost:8000/tests/examples-vanilla/triangle/
 npm run examples-webpack
 ```
 
-
+## Build
+```shell
+npx rollup -c
+```
 

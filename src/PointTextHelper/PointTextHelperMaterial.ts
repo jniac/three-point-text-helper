@@ -1,18 +1,17 @@
-import { Blending, IUniform, MultiplyBlending, NormalBlending, RawShaderMaterial, ShaderMaterial, Texture, Vector2 } from 'three'
-import { char_height, char_width, data, height, width } from '../atlas.js'
+import { Blending, MultiplyBlending, NormalBlending, RawShaderMaterial, Texture, Vector2 } from 'three'
+import { char_height, char_width, data, height, width } from '../atlas-core.js'
 import { get_shaders } from './get_shaders.js'
 
 const img = document.createElement('img')
 img.src = data
 
 const texture = new Texture(img)
+texture.generateMipmaps = false // Important, otherwise the texture is blurry (because texture LOD is not working here).
 img.onload = () => texture.needsUpdate = true
 
 export class PointTextHelperMaterial extends RawShaderMaterial {
 
   constructor(char_max: number, blending: Blending, zOffset: number) {
-
-    console.log('PointTextHelperMaterial')
 
     const [vertexShader, fragmentShader] = get_shaders(char_max)
 
@@ -25,9 +24,9 @@ export class PointTextHelperMaterial extends RawShaderMaterial {
       char_aspect: { value: char_width / char_height },
       blend_mode_normal_alpha_discard: { value: .5 },
     }
-  
+
     const defines = {} as Record<string, any>
-  
+
     if (blending === MultiplyBlending) {
       defines.BLEND_MULTIPLY = true
     }
@@ -35,23 +34,18 @@ export class PointTextHelperMaterial extends RawShaderMaterial {
       defines.BLEND_NORMAL = true
     }
 
-    console.log(uniforms)
-    
     super({
       uniforms,
       defines,
       vertexShader,
       fragmentShader,
-    
+
       vertexColors: true,
       depthTest: true,
       blending,
       transparent: blending === NormalBlending,
       depthWrite: blending === NormalBlending,
     })
-
-    console.log('yoooooooo')
-    console.log(this.uniforms)
   }
 
   get alpha() { return this.uniforms.opacity.value }
@@ -62,15 +56,15 @@ export class PointTextHelperMaterial extends RawShaderMaterial {
   get zOffset() { return this.uniforms.z_offset.value as number }
   set zOffset(value: number) {
     if (this.uniforms.z_offset.value !== value) {
-      this.uniforms.z_offset.value = value 
+      this.uniforms.z_offset.value = value
       this.uniformsNeedUpdate = true
     }
   }
 
   get alphaDiscard() { return this.uniforms.blend_mode_normal_alpha_discard.value }
-  set alphaDiscard(value: number) { 
+  set alphaDiscard(value: number) {
     if (this.uniforms.blend_mode_normal_alpha_discard.value !== value) {
-      this.uniforms.blend_mode_normal_alpha_discard.value = value 
+      this.uniforms.blend_mode_normal_alpha_discard.value = value
       this.uniformsNeedUpdate = true
     }
   }

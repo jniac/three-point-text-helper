@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { ColorRepresentation } from 'three';
+import { Blending, BufferGeometry, Color, ColorRepresentation, Points, Vector3 } from 'three';
+import { PointTextHelperMaterial } from './PointTextHelperMaterial';
 declare const defaultDisplayParams: {
     position: {
         x: number;
@@ -10,26 +10,26 @@ declare const defaultDisplayParams: {
     size: number;
     text: string;
 };
-declare type DisplayParams = Partial<typeof defaultDisplayParams>;
-declare class PointTextHelper extends THREE.Points {
+type DisplayParams = Partial<typeof defaultDisplayParams>;
+declare class PointTextHelper extends Points<BufferGeometry, PointTextHelperMaterial> {
     private charMax;
     constructor({ charMax, blending, zOffset, }?: {
         charMax?: number;
-        blending?: THREE.Blending;
+        blending?: Blending;
         zOffset?: number;
     });
     private push;
     private pushFill;
     display(params?: DisplayParams | DisplayParams[]): void;
-    displayVertices(vertices: THREE.Vector3[] | ArrayLike<number> | THREE.BufferGeometry, options?: {
+    displayVertices(vertices: Vector3[] | ArrayLike<number> | BufferGeometry, options?: {
         size?: number | ((index: number) => number);
         color?: ColorRepresentation | ((index: number) => ColorRepresentation);
         format?: (index: number) => string;
     }): any;
-    displayFaces(geometry: THREE.BufferGeometry, { color, size, format, }?: {
+    displayFaces(geometry: BufferGeometry, { color, size, format, }?: {
         size?: number;
-        color?: string | THREE.Color;
+        color?: string | Color;
         format?: (index: number) => string;
     }): void;
 }
-export { PointTextHelper, };
+export { PointTextHelper };
